@@ -1,0 +1,227 @@
+package com.vs2.QRme;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.facebook.android.Facebook;
+
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class Readings extends Activity {
+
+	Spinner spinnerSource;
+	EditText textSource, textAmount;
+	TextView textPoints;
+	Button btnSendRequest;
+	String sourceType;
+	int points;
+	Double amount;
+	Facebook facebook;
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.slide_up, R.anim.hold_y);
+		setContentView(R.layout.readings);
+		facebook = new Facebook(getString(R.string.app_id));
+		globalInitailize();
+		loadSource();
+		if(Utility.allowPostOnWall)
+		{
+			Utility.postMessageOnWall(facebook,"Good evening friends");
+		}
+		//Utility.postMessageOnWall("Good afternoon friends!");
+	}
+
+	@Override
+	protected void onPause() {
+		overridePendingTransition(R.anim.hold_y, R.anim.slide_down);
+		super.onPause();
+
+	}
+
+	public void globalInitailize() {
+		textSource = (EditText) findViewById(R.id.txt_payment_type);
+		textPoints = (TextView) findViewById(R.id.txt_points);
+		textAmount = (EditText) findViewById(R.id.txt_amount);
+		btnSendRequest = (Button)findViewById(R.id.btn_send_request);
+		LoadPoints loadPoints = new LoadPoints();
+		loadPoints.execute();
+	}
+
+	public void gotoMain(View v) {
+
+		finish();
+	}
+
+	public void sendRequest(View v) {
+		
+		try {
+			
+			if(amount < 50)
+			{
+				Toast.makeText(getApplicationContext(),getString(R.string.inSufBalMsg), Toast.LENGTH_LONG).show();
+			}
+			else{
+			
+				Double amt = Double.parseDouble(textAmount.getText().toString());
+				if(amt <= amount)
+				{
+					String source = textSource.getText().toString();
+					SendCashRequest request = new SendCashRequest();
+					request.execute(amt.toString(),source,sourceType);
+					
+				}
+				else{
+					Toast.makeText(getApplicationContext(),getString(R.string.inSufBalMsg), Toast.LENGTH_LONG).show();
+				}
+				
+			}
+		} catch (Exception e) {
+			Toast.makeText(getApplicationContext(),getString(R.string.errInReqMsg), Toast.LENGTH_LONG).show();
+		}
+			
+	}
+
+	@SuppressWarnings("unused")
+	private void showAlert() {
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				getApplicationContext());
+		// Add the buttons
+		builder.setMessage(getString(R.string.noInternetMsg));
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				
+			}
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
+	}
+
+	public void loadSelectedSource(int type) {
+		if (type == 1) {
+			textSource.setHint("Mobile No");
+			textSource.setInputType(InputType.TYPE_CLASS_PHONE);
+			sourceType = "Mobile";
+		} else {
+			textSource.setHint("Email ");
+			textSource.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+			sourceType = "Paypal";
+		}
+	}
+
+	public void loadSource() {
+		spinnerSource = (Spinner) findViewById(R.id.spinner_source);
+
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+				this, R.array.source_array,
+				android.R.layout.simple_spinner_item);
+
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		spinnerSource.setAdapter(adapter);
+		spinnerSource.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView,
+					View selectedItemView, int position, long id) {
+				Log.d("Selected Item", "Position : " + position);
+				int pos = position + 1;
+				loadSelectedSource(pos);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
+				// your code here
+			}
+
+		});
+
+	}
+
+	public class SendCashRequest extends AsyncTask<String, Integer, String> {
+
+		JSONObject jsonObject;
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			btnSendRequest.setText(getString(R.string.sndReqMsg));
+		}
+
+		@Override
+		protected String doInBackground(String... urls) {
+			// TODO Auto-generated method stub
+			
+			DatabaseFunctions.sendCashRequest(urls[0], urls[1], urls[2]);
+			
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+
+			super.onPostExecute(result);
+			Toast.makeText(getApplicationContext(), getString(R.string.reqSentMsg), Toast.LENGTH_LONG).show();
+			Utility.isPointsChanged = true;
+			btnSendRequest.setText(getString(R.string.send_request));
+
+		}
+
+	}
+	
+	public class LoadPoints extends AsyncTask<String, Integer, String> {
+
+		JSONObject jsonObject;
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			textPoints.setText(getString(R.string.LoadingMsg));
+		}
+
+		@Override
+		protected String doInBackground(String... urls) {
+			// TODO Auto-generated method stub
+			jsonObject = Utility
+					.getJSONfromURL(Utility.getServerPath()+"/calculatepoints.php?id="
+							+ Utility.facebookId);
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+
+			super.onPostExecute(result);
+
+			try {
+				points = jsonObject.getInt("point");
+				amount = jsonObject.getDouble("amt");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			textPoints.setText(points + " Pts = " + amount + " INR");
+
+		}
+
+	}
+}

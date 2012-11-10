@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:gravity="center_horizontal" >
+
+    
+    <ImageView
+        android:id="@+id/user_pic"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/ic_launcher"
+        android:contentDescription="@string/app_name" />
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_pic"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/welcome"
+        android:textColor="#249DEA"
+        android:textSize="25dp" />
+
+    <ImageView
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/welcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/login_button" />
+
+    <LinearLayout
+        android:id="@+id/auth_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/login"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/txt_auth"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/authenticating"
+            android:textColor="#0F8E00"
+            android:textSize="20dp" />
+
+        <RelativeLayout
+            android:id="@+id/loadingPanel"
+            style="@style/GenericProgressBackground"
+            android:layout_width="79dp" >
+            <ProgressBar style="@style/GenericProgressIndicator" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

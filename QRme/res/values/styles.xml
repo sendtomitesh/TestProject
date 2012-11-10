@@ -1,0 +1,41 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+    
+     <style name="SplashTheme">
+        <item name="android:windowNoTitle">true</item>
+        
+    </style>
+    
+     <style name="Button_Light">
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_default_holo_light</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
+    </style>
+    
+     <style name="icsbutton">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_default_holo_light</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
+    </style>
+    <style name="GenericProgressBackground" parent="android:Theme">
+    	<item name="android:layout_width">fill_parent</item>    
+    	<item name="android:layout_height">fill_parent</item>
+    	    
+    	<item name="android:gravity">center</item>  
+	</style>
+	<style name="GenericProgressIndicator" parent="@android:style/Widget.ProgressBar.Inverse">
+    	<item name="android:layout_width">wrap_content</item>
+    	<item name="android:layout_height">wrap_content</item>
+    	<item name="android:indeterminate">true</item> 
+    	<item name="android:foreground">#DD111111</item>
+	</style>
+</resources>

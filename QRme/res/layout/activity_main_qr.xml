@@ -1,0 +1,184 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="43dp"
+        android:background="#6ACA00"
+        android:gravity="center_vertical"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp" >
+
+        <ImageView
+            android:id="@+id/image_user"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name" />
+        
+        <TextView
+            android:id="@+id/welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/image_user"
+            android:gravity="center_vertical"
+            android:text="@string/welcome"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/image_flag"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/your_points"
+            android:background="@drawable/points_new"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:id="@+id/your_points"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/progress_points"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignRight="@+id/your_points"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/image_flag" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="55dp"
+        android:layout_marginTop="43dp"
+        android:fadingEdge="none"
+        android:fillViewport="true" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/qr_code"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/welcome" />
+
+            <LinearLayout
+                android:id="@+id/progress_qr_image"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center" >
+
+                <ProgressBar
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/button_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/qr_code"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/scanQR"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="gotoScan"
+                    android:text="@string/scan_to_earn" />
+          
+            </LinearLayout>
+            
+           <LinearLayout
+                    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+                    android:id="@+id/linear"
+                    android:layout_marginTop="40dp"
+                     android:layout_below="@+id/button_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+           </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/popup_menu_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/image_button_selector"
+            android:contentDescription="@string/exchange_rate"
+            android:onClick="gotoExchange"
+            android:src="@drawable/current_rate" />
+
+        <ImageButton
+            android:id="@+id/refreshQR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/image_button_selector"
+            android:contentDescription="@string/refresh_code"
+            android:onClick="refreshCode"
+            android:src="@drawable/reload" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/image_button_selector"
+            android:contentDescription="@string/menu_settings"
+            android:onClick="gotoMeetups"
+            android:src="@drawable/meetup" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/image_button_selector"
+            android:contentDescription="@string/readings"
+            android:onClick="gotoReadings"
+            android:src="@drawable/exchange" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/image_button_selector"
+            android:contentDescription="@string/messages"
+            android:onClick="gotoMessages"
+            android:src="@drawable/message" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/image_button_selector"
+            android:contentDescription="@string/terms"
+            android:onClick="gotoTerms"
+            android:src="@drawable/terms" />
+    </LinearLayout>
+
+</RelativeLayout>
