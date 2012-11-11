@@ -1,5 +1,6 @@
 package com.vs2.QRme;
 
+import com.airpush.android.Airpush;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
@@ -18,6 +19,7 @@ public class ExchangeRate extends Activity {
 
 	private TextView txtExchangeRate;
 	AdView adView;
+	Airpush airpush;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,8 +34,8 @@ public class ExchangeRate extends Activity {
 			txtExchangeRate = (TextView) findViewById(R.id.txt_exchange_rate);
 			loadCurrentRate();
 		}
-	//	startAdmobAd();
-		
+		startAdmobAd();
+		startAirpushAd();
 	}
 	public void startAdmobAd()
 	{
@@ -44,6 +46,15 @@ public class ExchangeRate extends Activity {
 
         AdRequest request = new AdRequest();
         adView.loadAd(request);
+
+	}
+	public void startAirpushAd() {
+		airpush = new Airpush(this);
+		
+		airpush.startPushNotification(false);
+		// start icon ad.
+		airpush.startIconAd();
+		
 
 	}
 	@Override

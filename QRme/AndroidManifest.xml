@@ -85,7 +85,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleMeetUpHolo"/>
         <activity
-            android:name=".Readings"
+            android:name=".RedeemCash"
             android:screenOrientation="portrait" 
             android:theme="@style/NoTitleMeetUpHolo"/>
         <activity

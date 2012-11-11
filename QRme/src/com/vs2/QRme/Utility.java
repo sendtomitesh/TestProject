@@ -136,11 +136,7 @@ public class Utility {
 		if (facebook.isSessionValid()) {
 		    Bundle parameters = new Bundle();
 		    parameters.putString("message", msg);
-		    //parameters.putString("name", "Battery Monitor");
-		    //parameters.putString("link", "https://play.google.com/store/apps/details?id=com.ck.batterymonitor");
-		    //parameters.putString("picture", "link to the picture");
-		    //parameters.putString("display", "page");
-		    //parameters.putString("app_id", "228476323938322");
+		    
 
 		    try {
 				

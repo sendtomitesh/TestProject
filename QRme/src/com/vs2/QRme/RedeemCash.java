@@ -1,5 +1,7 @@
 package com.vs2.QRme;
 
+import java.io.IOException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,6 +11,7 @@ import com.facebook.android.Facebook;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -19,11 +22,16 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
 
-public class Readings extends Activity {
+
+public class RedeemCash extends Activity {
 
 	Spinner spinnerSource;
 	EditText textSource, textAmount;
@@ -32,20 +40,32 @@ public class Readings extends Activity {
 	String sourceType;
 	int points;
 	Double amount;
-	Facebook facebook;
+	SharedPreferences sp;
+	AdView adView;
+	Facebook fb;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.slide_up, R.anim.hold_y);
-		setContentView(R.layout.readings);
-		facebook = new Facebook(getString(R.string.app_id));
+		setContentView(R.layout.redeemcash);
+		startAdmobAd();
+		
+		
 		globalInitailize();
 		loadSource();
-		if(Utility.allowPostOnWall)
-		{
-			Utility.postMessageOnWall(facebook,"Good evening friends");
-		}
+		
+		
 		//Utility.postMessageOnWall("Good afternoon friends!");
+	}
+	public void startAdmobAd() {
+		adView = new AdView(this, AdSize.BANNER, "a150990da66be0d");
+
+		LinearLayout l = (LinearLayout) findViewById(R.id.linear);
+		l.addView(adView);
+
+		AdRequest request = new AdRequest();
+		adView.loadAd(request);
+
 	}
 
 	@Override
@@ -181,6 +201,16 @@ public class Readings extends Activity {
 			Toast.makeText(getApplicationContext(), getString(R.string.reqSentMsg), Toast.LENGTH_LONG).show();
 			Utility.isPointsChanged = true;
 			btnSendRequest.setText(getString(R.string.send_request));
+			if(Utility.allowPostOnWall)
+			{
+				Toast.makeText(getApplicationContext(), "comming in allow", Toast.LENGTH_LONG).show();
+				fb = new Facebook(getString(R.string.app_id));
+				sp = getPreferences(MODE_PRIVATE);
+			
+				fb.setAccessToken(sp.getString("access_token", null));
+				fb.setAccessExpires(sp.getLong("expires", 0));
+				Utility.postMessageOnWall(fb,"I have just earned by using QRme Android app. Its awesome!");
+			}
 
 		}
 
@@ -223,5 +253,23 @@ public class Readings extends Activity {
 
 		}
 
+	}
+	@SuppressWarnings({ "deprecation" })
+	public void postMessageOnWall(String msg) {
+		if (fb.isSessionValid()) {
+		    Bundle parameters = new Bundle();
+		    parameters.putString("message", msg);
+		    try {
+				
+				String response = fb.request("me/feed", parameters,"POST");
+				//System.out.println(response);
+				Log.d("POST RESPONSE", "RESPONSE : " + response.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			//login();
+			Log.d("POST LOGIN ERROR", "FACEBOOK USER NOT LOGGED IN");
+		}
 	}
 }

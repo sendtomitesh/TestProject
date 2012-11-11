@@ -6,6 +6,7 @@
     android:gravity="center_horizontal" >
 
     <RelativeLayout
+        android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="43dp"
         android:background="#6ACA00"
@@ -29,6 +30,7 @@
             android:layout_centerVertical="true"
             android:onClick="gotoMain"
             android:text="@string/done" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -57,6 +59,16 @@
                 android:textColor="#249DEA"
                 android:textSize="27dp" />
         </LinearLayout>
-    </RelativeLayout>
 
+        
+
+    </RelativeLayout>
+<LinearLayout
+            xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+            android:id="@+id/linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="17dp"
+            android:orientation="horizontal" >
+        </LinearLayout>
 </RelativeLayout>

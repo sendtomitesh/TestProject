@@ -207,7 +207,7 @@ public class MainQR extends Activity {
 
 	public void gotoReadings(View v) {
 		Intent readingsIntent = new Intent(getApplicationContext(),
-				Readings.class);
+				RedeemCash.class);
 		startActivity(readingsIntent);
 	}
 

@@ -7,6 +7,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.airpush.android.Airpush;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
 
 
 import android.app.Activity;
@@ -23,6 +28,8 @@ import android.widget.SimpleAdapter;
 public class MeetupList extends Activity {
 	LinearLayout layoutLoading;
 	ListView listview;
+	AdView adView;
+	//Airpush airpush;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,10 +40,22 @@ public class MeetupList extends Activity {
 		String url = Utility.getServerPath() + "scanlist.php?id=" + Utility.facebookId;
 		LoadMessages messages = new LoadMessages();
 		messages.execute(url);
-		
+		startAdmobAd();
+	//	startAirpushAd();
 		//loadMessageFromUrl(url);
 	}
 	
+	public void startAdmobAd() {
+		adView = new AdView(this, AdSize.BANNER, "a150990da66be0d");
+
+		LinearLayout l = (LinearLayout) findViewById(R.id.linear);
+		l.addView(adView);
+
+		AdRequest request = new AdRequest();
+		adView.loadAd(request);
+
+	}
+
 	@Override
 	protected void onPause() {
 		overridePendingTransition(R.anim.hold_y, R.anim.slide_down);

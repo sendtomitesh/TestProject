@@ -7,6 +7,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
+
 
 
 import android.app.Activity;
@@ -23,6 +27,7 @@ import android.widget.SimpleAdapter;
 public class Messages extends Activity {
 	LinearLayout layoutLoading;
 	ListView listview;
+	AdView adView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,7 +38,7 @@ public class Messages extends Activity {
 		String url = Utility.getServerPath() + "messagelist.php?id=" + Utility.facebookId;
 		LoadMessages messages = new LoadMessages();
 		messages.execute(url);
-		
+		startAdmobAd();
 		//loadMessageFromUrl(url);
 	}
 	@Override
@@ -41,6 +46,16 @@ public class Messages extends Activity {
 		overridePendingTransition(R.anim.hold_y, R.anim.slide_down);
 		super.onPause();
 		
+	}
+	public void startAdmobAd() {
+		adView = new AdView(this, AdSize.BANNER, "a150990da66be0d");
+
+		LinearLayout l = (LinearLayout) findViewById(R.id.linear);
+		l.addView(adView);
+
+		AdRequest request = new AdRequest();
+		adView.loadAd(request);
+
 	}
 
 	public void gotoMain(View v) {

@@ -95,6 +95,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				// pic.setVisibility(View.VISIBLE);
 
 			} else {
+				
 				button.setVisibility(View.VISIBLE);
 				// pic.setVisibility(View.GONE);
 			}

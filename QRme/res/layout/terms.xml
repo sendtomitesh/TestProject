@@ -54,5 +54,13 @@
                 android:textSize="18dp" />
         </RelativeLayout>
     </ScrollView>
-
+	<LinearLayout
+	    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+	    android:id="@+id/linear"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_alignParentLeft="true"
+	    android:orientation="horizontal" >
+	</LinearLayout>
 </RelativeLayout>
