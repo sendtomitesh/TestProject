@@ -40,7 +40,7 @@ public class Utility {
 
 	public static String getServerPath()
 	{
-		return "http://hariomcards.com/QRme/";
+		return "http://108.161.130.243/~vs2/qrme/";
 	}
 	public static String generateQrCode() {
 		return new BigInteger(130, random).toString(32);

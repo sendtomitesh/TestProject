@@ -28,12 +28,13 @@ public class DatabaseFunctions {
 		// check for user in database here
 	}
 
-	public static void inserUserinDatabase(String FbUserId, String FbUserName,String gcd_id,
+	public static int inserUserinDatabase(String FbUserId, String FbUserName,String gcd_id,
 			String QrCode) {
+		
 		// Create a new HttpClient and Post Header
 		HttpClient httpclient = new DefaultHttpClient();
 
-		HttpPost httppost = new HttpPost(Utility.getServerPath()+"/insert.php");
+		HttpPost httppost = new HttpPost(Utility.getServerPath()+"insert.php");
 
 		try {
 			// Add your data
@@ -47,12 +48,16 @@ public class DatabaseFunctions {
 			// Execute HTTP Post Request
 			HttpResponse response = httpclient.execute(httppost);
 			String responseBody = EntityUtils.toString(response.getEntity());
-			Log.d("INSERT RESPONSE", responseBody.toString());
+			Log.e("INSERT RESPONSE", responseBody.toString());
+			return 0;
 		} catch (ClientProtocolException e) {
 			Log.e("Client error", e.toString());
+			
 		} catch (IOException e) {
 			Log.e("IO Error", e.toString());
+			
 		}
+		return 1;
 
 	}
 
@@ -104,7 +109,7 @@ public class DatabaseFunctions {
 		HttpClient httpclient = new DefaultHttpClient();
 
 		HttpPost httppost = new HttpPost(
-				Utility.getServerPath()+"/updateqrcode.php");
+				Utility.getServerPath()+"updateqrcode.php");
 		int check = 0;
 		try {
 			// Add your data

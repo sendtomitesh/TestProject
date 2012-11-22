@@ -34,7 +34,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/login_button" />
+        android:onClick="loginClick"
+        android:src="@drawable/login_button"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/auth_layout"

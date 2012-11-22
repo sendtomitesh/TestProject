@@ -1,9 +1,5 @@
 package com.vs2.QRme;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -14,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airpush.android.Airpush;
+import com.facebook.widget.ProfilePictureView;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
@@ -50,7 +46,9 @@ public class MainQR extends Activity {
 	int qrCodeHeight = 230;
 	AdView adView;
 	Airpush airpush;
-	ImageView fbUserAvatar;
+	
+	
+	private ProfilePictureView profilePictureView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -171,9 +169,8 @@ public class MainQR extends Activity {
 		progressPoints = (ProgressBar) findViewById(R.id.progress_points);
 		progressQrImage = (LinearLayout) findViewById(R.id.progress_qr_image);
 		welcomeText.setText(Utility.facebookUsername.toString() + "!");
-		fbUserAvatar = (ImageView) findViewById(R.id.image_user);
-		FacebookAvatar avatar = new FacebookAvatar();
-		avatar.execute();
+		profilePictureView = (ProfilePictureView)findViewById(R.id.prof_pic);
+		profilePictureView.setProfileId(Utility.facebookId);
 
 	}
 
@@ -306,38 +303,6 @@ public class MainQR extends Activity {
 	public void hidePoints() {
 		pointsText.setVisibility(View.INVISIBLE);
 		progressPoints.setVisibility(View.VISIBLE);
-	}
-
-	public class FacebookAvatar extends AsyncTask<Void, Void, Bitmap> {
-
-		@Override
-		protected Bitmap doInBackground(Void... urls) {
-			// TODO Auto-generated method stub
-			URL fbAvatarUrl = null;
-			Bitmap fbAvatarBitmap = null;
-			try {
-			
-				fbAvatarUrl = new URL(Utility.facebookAvatarUrl + "type=small&type=square");
-				fbAvatarBitmap = BitmapFactory.decodeStream(fbAvatarUrl.openConnection().getInputStream());
-				
-			} catch (MalformedURLException e) {
-				Log.d("FB Malfunction", e.toString());
-				//e.printStackTrace();
-			} catch (IOException e) {
-				Log.d("FB IOException", e.toString());
-				//e.printStackTrace();
-			}
-			return fbAvatarBitmap;
-		}
-
-		@Override
-		protected void onPostExecute(Bitmap result) {
-
-			super.onPostExecute(result);
-			fbUserAvatar.setImageBitmap(result);
-
-		}
-
 	}
 
 	public class RefreshCode extends AsyncTask<String, Integer, String> {
