@@ -40,7 +40,7 @@ public class MeetupList extends Activity {
 		String url = Utility.getServerPath() + "scanlist.php?id=" + Utility.facebookId;
 		LoadMessages messages = new LoadMessages();
 		messages.execute(url);
-		startAdmobAd();
+		
 	//	startAirpushAd();
 		//loadMessageFromUrl(url);
 	}
@@ -120,6 +120,7 @@ public class MeetupList extends Activity {
 			listview.setAdapter(adapter);
 			layoutLoading.setVisibility(View.GONE);
 			listview.setVisibility(View.VISIBLE);
+			startAdmobAd();
 			//Toast.makeText(getApplicationContext(), "Got Json", Toast.LENGTH_LONG).show();
 
 		}

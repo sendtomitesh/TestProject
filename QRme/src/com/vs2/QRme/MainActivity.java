@@ -1,9 +1,13 @@
 package com.vs2.QRme;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,8 +16,11 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.facebook.FacebookActivity;
 import com.facebook.SessionState;
@@ -31,24 +38,29 @@ public class MainActivity extends FacebookActivity  {
 	ProgressDialog pd;
 	
 	Boolean isUserInDatabase = false;
-	
+	boolean terms=false;
 
 	private final Context appContexts = this;
-	String[] permissions = { "offline_access", "publish_stream", "user_photos",
-			"publish_checkins", "photo_upload" };
-	
+//	String[] permissions121 = { "offline_access", "publish_stream", "user_photos",
+	//		"publish_checkins", "photo_upload" };
+	List<String> fbPerm = new ArrayList<String>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		
 		setContentView(R.layout.activity_main);
+		fbPerm.add("offline_access");
+		fbPerm.add("publish_stream");
+		fbPerm.add("photo_upload");
+		fbPerm.add("publish_actions");
+		
 		if(getGCMfromSP()==null )
 	  		gcm_id=setGCM_Id();
 		else
+		{
 			gcm_id=getGCMfromSP();
-		
+			terms=true;
+		}
 		
 		
 		if (Utility.hasConnection(appContexts) == false) 
@@ -67,13 +79,61 @@ public class MainActivity extends FacebookActivity  {
 				}
 				else
 				{
-					this.openSession();
+					if(terms)
+						initiateLogin();
+					else
+						showTermsOfUse();
+					
+					//	this.openSessionForPublish(getString(R.string.app_id), fbPerm);
+					
+				
 				}
 			
 			}  
 	}
 
 	
+
+	private void showTermsOfUse() {
+		// TODO Auto-generated method stub
+		 TextView msg1=new TextView(MainActivity.this);
+		 msg1.setText(getString(R.string.termOfUseText));
+		 msg1.setGravity(Gravity.CENTER);
+		 LinearLayout dialogLayout = new LinearLayout(MainActivity.this);
+         dialogLayout.addView(msg1);
+		 dialogLayout.setOrientation(LinearLayout.VERTICAL);
+		 ScrollView sv= new ScrollView(MainActivity.this);
+		 sv.addView(dialogLayout);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		// Add the buttons
+		builder.setTitle("Terms and Conditions");
+		
+		builder.setView(sv);
+		builder.setPositiveButton("I accept", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		               // User clicked OK button
+		        	   initiateLogin();
+		           }
+		       });
+		builder.setNegativeButton("I do not accept", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		               // User cancelled the dialog
+		        	   finish();
+		           }
+		       });
+		// Set other dialog properties
+		
+        
+		// Create the AlertDialog
+		AlertDialog dialog = builder.create();	
+		dialog.show();
+	}
+
+    private void initiateLogin()
+    {
+    	this.openSessionForPublish(getString(R.string.app_id), fbPerm);
+    }
 
 	private void login()
 	{
@@ -261,5 +321,5 @@ public class MainActivity extends FacebookActivity  {
 	
 
 }
-
+	
 }

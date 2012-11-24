@@ -12,14 +12,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-public class Terms extends Activity {
+public class Howtouse extends Activity {
 Airpush airpush;
 AdView adView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.slide_up, R.anim.hold_y);
-		setContentView(R.layout.terms);
+		setContentView(R.layout.howtouse);
 		startAdmobAd();
 	}
 	@Override

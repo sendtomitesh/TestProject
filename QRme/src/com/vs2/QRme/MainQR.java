@@ -6,6 +6,7 @@ import org.json.JSONTokener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airpush.android.Airpush;
+import com.facebook.FacebookActivity;
 import com.facebook.widget.ProfilePictureView;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
@@ -34,7 +36,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 
-public class MainQR extends Activity {
+public class MainQR extends FacebookActivity {
 
 	ImageView qrCodeImage;
 	TextView welcomeText, pointsText;
@@ -46,7 +48,7 @@ public class MainQR extends Activity {
 	int qrCodeHeight = 230;
 	AdView adView;
 	Airpush airpush;
-	
+	private final Context appContext=this;
 	
 	private ProfilePictureView profilePictureView;
 
@@ -54,7 +56,7 @@ public class MainQR extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_qr);
-		if (Utility.hasConnection(getApplicationContext()) == false) {
+		if (Utility.hasConnection(appContext) == false) {
 			showAlert();
 		} else {
 			globalInitialize();
@@ -70,6 +72,8 @@ public class MainQR extends Activity {
 		}
 
 	}
+	
+	
 
 	@Override
 	protected void onPause() {
@@ -80,7 +84,7 @@ public class MainQR extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (Utility.hasConnection(getApplicationContext()) == false) {
+		if (Utility.hasConnection(appContext) == false) {
 			showAlert();
 		} else {
 			if (flag == false) {
@@ -105,7 +109,7 @@ public class MainQR extends Activity {
 		switch (item.getItemId()) {
 		case R.id.menu_settings:
 			// Do Something
-			Intent settingsIntent = new Intent(getApplicationContext(),
+			Intent settingsIntent = new Intent(appContext,
 					Settings.class);
 			startActivity(settingsIntent);
 			return true;
@@ -138,7 +142,7 @@ public class MainQR extends Activity {
 	private void showAlert() {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(
-				getApplicationContext());
+				appContext);
 		// Add the buttons
 		builder.setMessage(getString(R.string.noInternetMsg));
 		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -152,7 +156,7 @@ public class MainQR extends Activity {
 	}
 
 	public void refreshCode(View v) {
-		if (Utility.hasConnection(getApplicationContext()) == false) {
+		if (Utility.hasConnection(appContext) == false) {
 			showAlert();
 		} else {
 			Utility.isQrRefreshed = true;
@@ -180,36 +184,36 @@ public class MainQR extends Activity {
 	}
 
 	public void gotoScan(View v) {
-		Intent intent = new Intent(getApplicationContext(), Scanner.class);
+		Intent intent = new Intent(appContext, Scanner.class);
 		startActivity(intent);
 	}
 
 	public void gotoExchange(View v) {
-		Intent exchangeIntent = new Intent(getApplicationContext(),
+		Intent exchangeIntent = new Intent(appContext,
 				ExchangeRate.class);
 		startActivity(exchangeIntent);
 	}
 
 	public void gotoMeetups(View v) {
-		Intent meetupIntent = new Intent(getApplicationContext(),
+		Intent meetupIntent = new Intent(appContext,
 				MeetupList.class);
 		startActivity(meetupIntent);
 	}
 
 	public void gotoMessages(View v) {
-		Intent messageIntent = new Intent(getApplicationContext(),
+		Intent messageIntent = new Intent(appContext,
 				Messages.class);
 		startActivity(messageIntent);
 	}
 
 	public void gotoReadings(View v) {
-		Intent readingsIntent = new Intent(getApplicationContext(),
+		Intent readingsIntent = new Intent(appContext,
 				RedeemCash.class);
 		startActivity(readingsIntent);
 	}
 
-	public void gotoTerms(View v) {
-		Intent termsIntent = new Intent(getApplicationContext(), Terms.class);
+	public void howtouseClicked(View v) {
+		Intent termsIntent = new Intent(appContext, Howtouse.class);
 		startActivity(termsIntent);
 	}
 
@@ -335,7 +339,7 @@ public class MainQR extends Activity {
 				loadData();
 
 			} else {
-				Toast.makeText(getApplicationContext(),
+				Toast.makeText(appContext,
 						getString(R.string.CodeNotRefMsg), Toast.LENGTH_LONG)
 						.show();
 			}

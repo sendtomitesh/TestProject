@@ -34,7 +34,7 @@ public class ExchangeRate extends Activity {
 			txtExchangeRate = (TextView) findViewById(R.id.txt_exchange_rate);
 			loadCurrentRate();
 		}
-		startAdmobAd();
+		
 		
 	}
 	public void startAdmobAd()
@@ -114,8 +114,9 @@ public class ExchangeRate extends Activity {
 
 			super.onPostExecute(result);
 			txtExchangeRate.setText(currentRate);
+			startAdmobAd();
 			startAirpushAd();
-
+			
 		}
 
 	}

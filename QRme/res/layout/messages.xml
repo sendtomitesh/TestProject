@@ -36,7 +36,8 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="43dp" >
+        android:layout_marginTop="43dp"
+        android:paddingBottom="50dp" >
 
         <ListView
             android:id="@+id/listview_message"
@@ -60,15 +61,16 @@
                 android:textSize="27dp" />
         </LinearLayout>
 
-        
-
     </RelativeLayout>
-<LinearLayout
-            xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-            android:id="@+id/linear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="17dp"
-            android:orientation="horizontal" >
-        </LinearLayout>
+
+    <LinearLayout
+        xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+        android:id="@+id/linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal" >
+    </LinearLayout>
+
 </RelativeLayout>

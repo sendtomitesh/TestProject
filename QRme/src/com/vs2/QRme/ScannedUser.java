@@ -2,19 +2,43 @@ package com.vs2.QRme;
 
 
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.facebook.FacebookActivity;
+import com.facebook.FacebookRequestError;
+import com.facebook.HttpMethod;
+import com.facebook.Request;
+import com.facebook.RequestAsyncTask;
+import com.facebook.Response;
+import com.facebook.Session;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
-public class ScannedUser extends Activity {
+public class ScannedUser extends FacebookActivity {
 	LinearLayout layoutLoading;
 	TextView textScannedUsername,textPointsEarned,textTotalPoints;
 	String[] scannedInfo;
 	String[] otherScanInfo;
+	
+	private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
+	private static final int REAUTH_ACTIVITY_CODE = 100;
+	private static final String PENDING_PUBLISH_KEY = "pendingPublishReauthorization";
+	private boolean pendingPublishReauthorization = false;
+	private static final String TAG = "MainFragment";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,6 +58,7 @@ public class ScannedUser extends Activity {
 			textScannedUsername.setText(username);
 			textPointsEarned.setText(pointsEarned);
 			textTotalPoints.setText(totalPoints);
+			publishStory("I met with "+scannedInfo[2]+" using QRme and earned "+scannedInfo[3]+" Points!");
 			
 		}
 		if(scannedUserIntent.hasExtra("OtherScan"))
@@ -45,7 +70,7 @@ public class ScannedUser extends Activity {
 			textScannedUsername.setText(codeScanned);
 			textPointsEarned.setText(pointsEarned);
 			textTotalPoints.setText(totalPoints);
-			
+			publishStory("I scanned a QRcode using QRme and earned "+otherScanInfo[3]+"Points!");
 		}
 		if(scannedUserIntent.hasExtra("ScanError"))
 		{
@@ -70,4 +95,74 @@ public class ScannedUser extends Activity {
 	public void gotoMain(View v) {
 		finish();
 	}
+	private void publishStory(String title) {
+	    Session session = Session.getActiveSession();
+
+	    if (session != null){
+
+	        // Check for publish permissions    
+	        List<String> permissions = session.getPermissions();
+	        if (!isSubsetOf(PERMISSIONS, permissions)) {
+	            pendingPublishReauthorization = true;
+	            Session.ReauthorizeRequest reauthRequest = new Session
+	                    .ReauthorizeRequest(this, PERMISSIONS)
+	                    .setRequestCode(REAUTH_ACTIVITY_CODE);
+	        session.reauthorizeForPublish(reauthRequest);
+	            return;
+	        }
+
+	        Bundle postParams = new Bundle();
+	        postParams.putString("name", title);
+	        postParams.putString("caption", "QRme is a Great app earn Mobile recharge with fun.");
+	        postParams.putString("description", "QR codes/barcodes are available on various products. Using android phone with camera and QRme app you can scan codes. Upon scanning codes you will be rewarded with points. Points can be redeemed in terms of mobile recharge and cash");
+	        postParams.putString("link", "http://www.facebook.com/QRmeCommunity");
+	        postParams.putString("picture", "http://108.161.130.243/~vs2/qrme/qrme512.png");
+
+	        Request.Callback callback= new Request.Callback() {
+	            public void onCompleted(Response response) {
+	                JSONObject graphResponse = response
+	                                           .getGraphObject()
+	                                           .getInnerJSONObject();
+	                String postId = null;
+	                try {
+	                    postId = graphResponse.getString("id");
+	                } catch (JSONException e) {
+	                    Log.i(TAG,
+	                        "JSON error "+ e.getMessage());
+	                }
+	                FacebookRequestError error = response.getError();
+	                if (error != null) {
+	                    Toast.makeText(getApplicationContext(),
+	                         error.getErrorMessage(),
+	                         Toast.LENGTH_SHORT).show();
+	                    } 
+	                }
+	            
+	        };
+
+	        Request request = new Request(session, "me/feed", postParams, 
+	                              HttpMethod.POST, callback);
+
+	        RequestAsyncTask task = new RequestAsyncTask(request);
+	        task.execute();
+	    }
+
+	}
+	private boolean isSubsetOf(Collection<String> subset, Collection<String> superset) {
+	    for (String string : subset) {
+	        if (!superset.contains(string)) {
+	            return false;
+	        }
+	    }
+	    return true;
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    super.onActivityResult(requestCode, resultCode, data);
+	    if (requestCode == REAUTH_ACTIVITY_CODE) {
+	        Session.getActiveSession().onActivityResult(ScannedUser.this, 
+	            requestCode, resultCode, data);
+	    }
+	 }
 }

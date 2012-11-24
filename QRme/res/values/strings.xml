@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">QRme</string>
     <string name="hello_world">Hello world!</string>
-    <string name="welcome">Welcome to QRme!</string>
+    <string name="welcome">Welcome</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="app_id">266920260097058</string>
@@ -11,8 +12,7 @@
     <string name="refresh_code">Refresh Code</string>
     <string name="exchange_rate">Exchange Rate</string>
     <string name="terms">Terms</string>
-    <string name="terms_and_conditions">Terms and conditions</string>
-  
+    <string name="howtouse">How to use QRme!</string>
     <string name="current_exchange_rate">Current exchange rate</string>
     <string name="done">Done</string>
     <string name="messages">Messages</string>
@@ -25,12 +25,12 @@
     <string name="amount">Amount</string>
     <string name="send_request">Send Request</string>
     <string name="noInternetMsg">No internet connection Found!</string>
-    <string  name="fbError">Facebook Error!</string>
-    <string  name="loginCancelledMsg">Login Cancelled!</string>
+    <string name="fbError">Facebook Error!</string>
+    <string name="loginCancelledMsg">Login Cancelled!</string>
     <string name="LoadingMsg">Loading....</string>
     <string name="refCodeMsg">Refreshing QR Code</string>
     <string name="CodeNotRefMsg">Code does not refrehed, please try again</string>
-    <string  name="inSufBalMsg">Insufficient Balance!</string>
+    <string name="inSufBalMsg">Insufficient Balance!</string>
     <string name="errInReqMsg">Error in sending request to server!</string>
     <string name="sndReqMsg">Sending Request</string>
     <string name="reqSentMsg">Request Sent</string>
@@ -45,10 +45,64 @@
     <string name="recent_meetups">Recent QRMeetUps</string>
     <string name="allow_adds">Allow notification ad</string>
     <string name="allow_posts">Allow post on wall</string>
+    <string name="termOfUseText">Here all terms of use will come\nadsf adf\nadsffddsf\nadffsdfasdff\nasdfasfasf
+        \nasdfasdfasdf
+        \nasdfasfdsadf
+        \nadfasdfasfsadfsadf
+        \nadsfasdfsdafsadfs
+        \nasdfasfasdfasdfasfs
+        \nasdfasfasflakjsdflkjsfd
+        \n asdfasfdlasdfjlasdkjflasdf
+        \nalsdfkjaslfjaslfjasdlfkjsd
+        \nalsdfkjaslfkjaslfjksadlf
+        \nasdkfjaslfkjaslfkjsadlkfd
+        \nlaskjdflsakjfdlsjkfsdlkjf
+        \nasdfasdfasdf
+        \nasdflkjaslfkajsdfl
+        \nasdfasfsfsdf
+        \nlasldfkjasldjksdf
+        \nlasdkjflaskjfalsdkf
+        \nlaksjdfkajsflsdf
+        \nlaksdjflasdkjfds
+        \nlkjasdflkjsdfl
+        \n
+        \nlkjasdlfkslfdkjskldf
+        \nlakjsflksjdflsjdkfldkj
+        
+        
+        </string>
+<string name="howtousetext">Here all terms of use will come\nadsf adf\nadsffddsf\nadffsdfasdff\nasdfasfasf
+        \nasdfasdfasdf
+        \nasdfasfdsadf
+        \nadfasdfasfsadfsadf
+        \nadsfasdfsdafsadfs
+        \nasdfasfasdfasdfasfs
+        \nasdfasfasflakjsdflkjsfd
+        \n asdfasfdlasdfjlasdkjflasdf
+        \nalsdfkjaslfjaslfjasdlfkjsd
+        \nalsdfkjaslfkjaslfjksadlf
+        \nasdkfjaslfkjaslfkjsadlkfd
+        \nlaskjdflsakjfdlsjkfsdlkjf
+        \nasdfasdfasdf
+        \nasdflkjaslfkajsdfl
+        \nasdfasfsfsdf
+        \nlasldfkjasldjksdf
+        \nlasdkjflaskjfalsdkf
+        \nlaksjdfkajsflsdf
+        \nlaksdjflasdkjfds
+        \nlkjasdflkjsdfl
+        \n
+        \nlkjasdlfkslfdkjskldf
+        \nlakjsflksjdflsjdkfldkj
+        
+        
+        </string>
+    
     <string-array name="source_array">
         <item>Mobile</item>
         <item>Paypal</item>
     </string-array>
-    
-  
+
+    <string name="title_activity_qrcode__evaluation">QRcode_Evaluation</string>
+
 </resources>

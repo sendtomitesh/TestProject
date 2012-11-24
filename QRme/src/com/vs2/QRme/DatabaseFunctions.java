@@ -152,8 +152,7 @@ public class DatabaseFunctions {
 		try {
 			// Add your data
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-			nameValuePairs
-			.add(new BasicNameValuePair("id", Utility.facebookId));
+			nameValuePairs.add(new BasicNameValuePair("id", Utility.facebookId));
 			nameValuePairs.add(new BasicNameValuePair("qrcode", QrCode));
 			
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
