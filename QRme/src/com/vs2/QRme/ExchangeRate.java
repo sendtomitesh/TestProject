@@ -51,9 +51,7 @@ public class ExchangeRate extends Activity {
 	public void startAirpushAd() {
 		airpush = new Airpush(this);
 		
-		airpush.startPushNotification(false);
-		// start icon ad.
-		airpush.startIconAd();
+		airpush.startSmartWallAd();
 		
 
 	}

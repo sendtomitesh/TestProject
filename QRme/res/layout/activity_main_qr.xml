@@ -8,18 +8,18 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="43dp"
-        android:background="#6ACA00"
+        android:background="@drawable/blackgradiant"
         android:gravity="center_vertical"
         android:paddingLeft="7dp"
         android:paddingRight="7dp"
         xmlns:facebook="http://schemas.android.com/apk/res-auto"   >
 
-	    <com.facebook.widget.ProfilePictureView
+	  <com.facebook.widget.ProfilePictureView
 	    android:id="@+id/prof_pic"
 	    android:layout_width="35dp"
 	    android:layout_height="35dp"
 	    android:layout_centerVertical="true"
-	    facebook:preset_size="small" />
+	    facebook:preset_size="small" />			  
 
         <TextView
             android:id="@+id/welcome"
@@ -31,7 +31,8 @@
             android:text="@string/welcome"
             android:textColor="#ffffff"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:typeface="serif" />
 
         <ImageView
             android:id="@+id/image_flag"
@@ -48,6 +49,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="center_vertical"
+            android:text="10000"
             android:textColor="#ffffff"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -62,17 +64,19 @@
             android:layout_toRightOf="@+id/image_flag" />
     
 </RelativeLayout>
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="46dp"
         android:layout_marginTop="43dp"
         android:fadingEdge="none"
         android:fillViewport="true" >
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_gradiant" >
 
             <ImageView
                 android:id="@+id/qr_code"
@@ -83,8 +87,8 @@
 
             <LinearLayout
                 android:id="@+id/progress_qr_image"
-                android:layout_width="230dp"
-                android:layout_height="230dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_centerHorizontal="true"
                 android:gravity="center" >
 
@@ -105,8 +109,13 @@
                     android:id="@+id/scanQR"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bluebutton"
                     android:onClick="gotoScan"
-                    android:text="@string/scan_to_earn" />
+                    android:text="@string/scan_to_earn"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    android:textStyle="italic"
+                    android:typeface="serif" />
           
             </LinearLayout>
             
@@ -123,13 +132,20 @@
     </ScrollView>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/popup_menu_background"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-        <ImageButton
+        android:background="@drawable/background_gradiant"
+        android:gravity="fill_horizontal"
+        android:orientation="horizontal" >
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal" >
+         
+            	<ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -181,6 +197,9 @@
             android:contentDescription="@string/terms"
             android:onClick="howtouseClicked"
             android:src="@drawable/terms" />
-    </LinearLayout>
+            
+        </LinearLayout>
+        
+            </LinearLayout>
 
 </RelativeLayout>

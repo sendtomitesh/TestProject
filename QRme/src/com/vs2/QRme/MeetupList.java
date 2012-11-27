@@ -41,7 +41,7 @@ public class MeetupList extends Activity {
 		LoadMessages messages = new LoadMessages();
 		messages.execute(url);
 		
-	//	startAirpushAd();
+		startAdmobAd();
 		//loadMessageFromUrl(url);
 	}
 	

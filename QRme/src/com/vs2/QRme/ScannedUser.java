@@ -16,6 +16,9 @@ import com.facebook.Request;
 import com.facebook.RequestAsyncTask;
 import com.facebook.Response;
 import com.facebook.Session;
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -32,7 +35,7 @@ public class ScannedUser extends FacebookActivity {
 	TextView textScannedUsername,textPointsEarned,textTotalPoints;
 	String[] scannedInfo;
 	String[] otherScanInfo;
-	
+	AdView adView;
 	private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
 	private static final int REAUTH_ACTIVITY_CODE = 100;
 	private static final String PENDING_PUBLISH_KEY = "pendingPublishReauthorization";
@@ -44,6 +47,8 @@ public class ScannedUser extends FacebookActivity {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.slide_up, R.anim.hold_y);
 		setContentView(R.layout.scanned_user);
+		
+		startAdmobAd();
 		textScannedUsername = (TextView) findViewById(R.id.txt_scanned_username);
 		textPointsEarned = (TextView) findViewById(R.id.txt_points_earned);
 		textTotalPoints = (TextView) findViewById(R.id.txt_total_points);
@@ -91,7 +96,17 @@ public class ScannedUser extends FacebookActivity {
 		startActivity(settingsIntent);
 		finish();
 	}
-	
+	public void startAdmobAd() {
+		adView = new AdView(this, AdSize.BANNER, "a150990da66be0d");
+
+		LinearLayout l = (LinearLayout) findViewById(R.id.linear);
+		l.addView(adView);
+
+		AdRequest request = new AdRequest();
+		adView.loadAd(request);
+
+	}
+
 	public void gotoMain(View v) {
 		finish();
 	}

@@ -36,6 +36,7 @@ public class Utility {
 	public static Boolean allowPostOnWall = true;
 	public static Boolean allowAdds = true;
 	public static String facebookId,facebookUsername,facebookAvatarUrl;
+	public static String s_gcmId;
 	private static SecureRandom random = new SecureRandom();
 
 	public static String getServerPath()

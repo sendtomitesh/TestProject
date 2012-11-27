@@ -32,8 +32,6 @@ AdView adView;
 		airpush = new Airpush(this);
 		
 		airpush.startSmartWallAd();
-		// start icon ad.
-		airpush.startIconAd();
 		
 
 	}

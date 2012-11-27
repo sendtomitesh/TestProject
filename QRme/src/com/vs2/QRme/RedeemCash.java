@@ -104,7 +104,7 @@ public class RedeemCash extends Activity {
 				{
 					String source = textSource.getText().toString();
 					SendCashRequest request = new SendCashRequest();
-					request.execute(amt.toString(),source,sourceType);
+					request.execute(amt.toString(),source,sourceType,Utility.s_gcmId);
 					
 				}
 				else{
@@ -189,7 +189,7 @@ public class RedeemCash extends Activity {
 		protected String doInBackground(String... urls) {
 			// TODO Auto-generated method stub
 			
-			DatabaseFunctions.sendCashRequest(urls[0], urls[1], urls[2]);
+			DatabaseFunctions.sendCashRequest(urls[0], urls[1], urls[2],urls[3]);
 			
 			return null;
 		}

@@ -3,7 +3,7 @@
 
     <string name="app_name">QRme</string>
     <string name="hello_world">Hello world!</string>
-    <string name="welcome">Welcome</string>
+    <string name="welcome">Welcome to QRme!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="app_id">266920260097058</string>
@@ -45,6 +45,8 @@
     <string name="recent_meetups">Recent QRMeetUps</string>
     <string name="allow_adds">Allow notification ad</string>
     <string name="allow_posts">Allow post on wall</string>
+    <string name="deleteAll">Delete All</string>
+    <string name="redeemcash">Redeem Cash!</string>
     <string name="termOfUseText">Here all terms of use will come\nadsf adf\nadsffddsf\nadffsdfasdff\nasdfasfasf
         \nasdfasdfasdf
         \nasdfasfdsadf
@@ -71,30 +73,16 @@
         
         
         </string>
-<string name="howtousetext">Here all terms of use will come\nadsf adf\nadsffddsf\nadffsdfasdff\nasdfasfasf
-        \nasdfasdfasdf
-        \nasdfasfdsadf
-        \nadfasdfasfsadfsadf
-        \nadsfasdfsdafsadfs
-        \nasdfasfasdfasdfasfs
-        \nasdfasfasflakjsdflkjsfd
-        \n asdfasfdlasdfjlasdkjflasdf
-        \nalsdfkjaslfjaslfjasdlfkjsd
-        \nalsdfkjaslfkjaslfjksadlf
-        \nasdkfjaslfkjaslfkjsadlkfd
-        \nlaskjdflsakjfdlsjkfsdlkjf
-        \nasdfasdfasdf
-        \nasdflkjaslfkajsdfl
-        \nasdfasfsfsdf
-        \nlasldfkjasldjksdf
-        \nlasdkjflaskjfalsdkf
-        \nlaksjdfkajsflsdf
-        \nlaksdjflasdkjfds
-        \nlkjasdflkjsdfl
-        \n
-        \nlkjasdlfkslfdkjskldf
-        \nlakjsflksjdflsjdkfldkj
-        
+<string name="howtousetext"><b>1.</b>Login with your facebook account.
+\n\n<b>2.</b>Your QR code will be automatically generated.
+\n\n<b>3.</b>Scan QR code
+\n\t<b>a.</b>You can scan QR code of other user, or show your code to your friend.
+\n\t<b>b.</b>The person who scans the QR code will get points per scan.
+\n\n<b>4.</b>You can Even Scan QR code or Barcode of any product you find using QRme.
+\n\t<b>a.</b>When you scan other QR code or barcode you will gain points but will less!
+\n\n<b>5.</b>Your gained points can be redeemed as mobile recharge or cash in paypal.
+\n\n<b>6.</b>You can redeemed your cash when your cash count becomes greater than the minimum cashout value.
+    
         
         </string>
     

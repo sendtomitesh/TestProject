@@ -67,7 +67,7 @@ public class MainQR extends FacebookActivity {
 			loadData();
 			flag = true;
 			startAdmobAd();
-			//startAirpushAd();
+			startNotificationAd();
 
 		}
 
@@ -129,14 +129,12 @@ public class MainQR extends FacebookActivity {
 
 	}
 
-	public void startAirpushAd() {
+	public void startNotificationAd()
+	{
 		airpush = new Airpush(this);
-		airpush.startSmartWallAd(); // launch smart wall on App start
+		
 		airpush.startPushNotification(false);
-		// start icon ad.
-		airpush.startIconAd();
-		airpush.startIconAd();
-
+		
 	}
 
 	private void showAlert() {

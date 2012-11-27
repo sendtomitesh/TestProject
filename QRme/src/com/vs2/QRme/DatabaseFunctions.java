@@ -62,7 +62,7 @@ public class DatabaseFunctions {
 	}
 
 	
-	public static void sendCashRequest(String amount,String source,String type) {
+	public static void sendCashRequest(String amount,String source,String type,String gcm_id) {
 		// Create a new HttpClient and Post Header
 		Log.d("CASH REQUEST", "Sending request");
 		HttpClient httpclient = new DefaultHttpClient();
@@ -75,6 +75,7 @@ public class DatabaseFunctions {
 			nameValuePairs.add(new BasicNameValuePair("amt", amount));
 			nameValuePairs.add(new BasicNameValuePair("source", source));
 			nameValuePairs.add(new BasicNameValuePair("type", type));
+			nameValuePairs.add(new BasicNameValuePair("gcm_id", gcm_id));
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 			// Execute HTTP Post Request

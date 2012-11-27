@@ -11,7 +11,7 @@
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/btn_default_holo_light</item>
+      
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:minHeight">48dip</item>
@@ -20,7 +20,7 @@
     
      <style name="icsbutton">
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/btn_default_holo_light</item>
+        
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:minHeight">48dip</item>

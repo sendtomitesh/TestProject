@@ -2,13 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@drawable/background_gradiant"
     android:gravity="center_horizontal" >
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="43dp"
-        android:background="#6ACA00"
+        android:background="@drawable/blackgradiant"
         android:gravity="center_vertical"
         android:paddingLeft="7dp"
         android:paddingRight="7dp" >
@@ -27,8 +27,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:background="@drawable/bluebutton"
             android:onClick="gotoMain"
             android:text="@string/done" />
+
     </RelativeLayout>
 
     <ScrollView
@@ -49,9 +51,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:textColor="#249DEA"
                 android:text="@string/howtousetext"
+                android:textColor="#ffffff"
                 android:textSize="18sp" />
+
         </RelativeLayout>
     </ScrollView>
 	<LinearLayout

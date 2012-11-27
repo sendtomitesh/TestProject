@@ -195,7 +195,7 @@ public class MainActivity extends FacebookActivity  {
 		Utility.facebookId=user.getId();
 	  	Utility.facebookUsername=user.getName();
 	  	Utility.facebookAvatarUrl=user.getLink();
-	  	
+	  	Utility.s_gcmId=gcm_id;
 	  
 	}
 

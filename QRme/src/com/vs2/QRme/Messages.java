@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.airpush.android.Airpush;
+
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
@@ -14,20 +16,27 @@ import com.google.ads.AdView;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class Messages extends Activity {
 	LinearLayout layoutLoading;
 	ListView listview;
 	AdView adView;
+	Airpush airpush;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,7 +47,7 @@ public class Messages extends Activity {
 		String url = Utility.getServerPath() + "messagelist.php?id=" + Utility.facebookId;
 		LoadMessages messages = new LoadMessages();
 		messages.execute(url);
-		startAdmobAd();
+		
 		//loadMessageFromUrl(url);
 	}
 	@Override
@@ -55,6 +64,13 @@ public class Messages extends Activity {
 
 		AdRequest request = new AdRequest();
 		adView.loadAd(request);
+
+	}
+
+	public void startAirpushAd() {
+		airpush = new Airpush(this);
+		airpush.startSmartWallAd(); // launch smart wall on App start
+		
 
 	}
 
@@ -106,18 +122,70 @@ public class Messages extends Activity {
 		protected void onPostExecute(String result) {
 
 			super.onPostExecute(result);
+			
+			//final ListView listview = (ListView) findViewById(R.id.listview_message);
+			if(mylist.size()>0)
+			{
+				setmsgList();
+			}
+			else
+			{
+				TextView msg =(TextView)findViewById(R.id.loadingtxt);
+				msg.setText("No messages in your inbox");
+			}
+			
+			startAdmobAd();
+			startAirpushAd();
+		
+
+		}
+		public void setmsgList()
+		{
 			String[] from = new String[] { "message"};
 			int[] to = new int[] { R.id.txt_message };
-			//final ListView listview = (ListView) findViewById(R.id.listview_message);
 			ListAdapter adapter = new SimpleAdapter(getApplicationContext(), mylist,R.layout.messages_list_item, from, to);
-			
 			listview.setAdapter(adapter);
 			layoutLoading.setVisibility(View.GONE);
 			listview.setVisibility(View.VISIBLE);
-			//Toast.makeText(getApplicationContext(), "Got Json", Toast.LENGTH_LONG).show();
+			listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					// TODO Auto-generated method stub
+					
+					
+					AlertDialog multichoice;
+		    		multichoice=new AlertDialog.Builder(Messages.this)
+		    			
+		               .setTitle( "Delete this message?" )
+		               .setPositiveButton("OK", new OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							
+						}
+					})
+		    		.setNegativeButton("Cancel", new OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							
+						}
+					})
+		             
+		               .create();
+		    			
+		    		multichoice.show();
+
+					
+				}
+			});
 		}
 
 	}
+	
 
 }

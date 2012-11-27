@@ -2,13 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@drawable/background_gradiant"
     android:gravity="center_horizontal" >
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="43dp"
-        android:background="#6ACA00"
+        android:background="@drawable/blackgradiant"
         android:gravity="center_vertical"
         android:paddingLeft="7dp"
         android:paddingRight="7dp" >
@@ -20,15 +20,19 @@
             android:gravity="center_vertical"
             android:text="@string/menu_settings"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:typeface="serif" />
         
          <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:onClick="gotoMain"
-                android:text="@string/done" />
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_centerVertical="true"
+             android:background="@drawable/bluebutton"
+             android:onClick="gotoMain"
+             android:text="@string/done"
+             android:textColor="#ffffff" />
+
     </RelativeLayout>
 
     <ScrollView
@@ -47,21 +51,22 @@
                 android:id="@+id/check_post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="50dp"
-                android:textColor="#249DEA"
                 android:onClick="postOnWall"
-                android:text="@string/allow_posts" />
+                android:paddingLeft="50dp"
+                android:text="@string/allow_posts"
+                android:textColor="#ffffff"
+                android:typeface="serif" />
 
             <CheckBox
                 android:id="@+id/check_adds"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/check_post"
-                android:paddingLeft="50dp"
-                android:textColor="#249DEA"
                 android:onClick="showAdds"
-                android:text="@string/allow_adds" />
-
+                android:paddingLeft="50dp"
+                android:text="@string/allow_adds"
+                android:textColor="#ffffff"
+                android:typeface="serif" />
            
         </RelativeLayout>
     </ScrollView>
