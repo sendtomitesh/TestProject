@@ -9,6 +9,14 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.facebook.FacebookActivity;
 import com.facebook.FacebookRequestError;
 import com.facebook.HttpMethod;
@@ -20,15 +28,6 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
 
 public class ScannedUser extends FacebookActivity {
 	LinearLayout layoutLoading;
@@ -38,7 +37,9 @@ public class ScannedUser extends FacebookActivity {
 	AdView adView;
 	private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
 	private static final int REAUTH_ACTIVITY_CODE = 100;
+	@SuppressWarnings("unused")
 	private static final String PENDING_PUBLISH_KEY = "pendingPublishReauthorization";
+	@SuppressWarnings("unused")
 	private boolean pendingPublishReauthorization = false;
 	private static final String TAG = "MainFragment";
 	
@@ -134,7 +135,8 @@ public class ScannedUser extends FacebookActivity {
 	        postParams.putString("picture", "http://108.161.130.243/~vs2/qrme/qrme512.png");
 
 	        Request.Callback callback= new Request.Callback() {
-	            public void onCompleted(Response response) {
+	            @SuppressWarnings("unused")
+				public void onCompleted(Response response) {
 	                JSONObject graphResponse = response
 	                                           .getGraphObject()
 	                                           .getInnerJSONObject();

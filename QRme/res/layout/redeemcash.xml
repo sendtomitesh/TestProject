@@ -20,7 +20,7 @@
             android:gravity="center_vertical"
             android:text="@string/redeemcash"
             android:textColor="#ffffff"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:typeface="serif" />
 
         <Button
@@ -54,7 +54,7 @@
                 android:layout_marginTop="7dp"
                 android:layout_centerHorizontal="true"
                 android:textColor="#249DEA"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:id="@+id/layout_source"
@@ -72,12 +72,50 @@
                     android:layout_marginLeft="30dp"
                     android:prompt="@string/select_source" />
             </LinearLayout>
+            
+            <LinearLayout
+                android:id="@+id/layout_operator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:layout_below="@+id/layout_source"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/spinner_operator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:prompt="@string/select_operator" />
+            </LinearLayout>
+            
+             <LinearLayout
+                android:id="@+id/layout_circle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:layout_below="@+id/layout_operator"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/spinner_circle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:prompt="@string/select_circle" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layout_source"
+                android:layout_below="@+id/layout_circle"
                 android:layout_marginTop="20dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >

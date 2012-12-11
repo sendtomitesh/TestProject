@@ -155,7 +155,7 @@ public class Utility {
 	}
 
 	//Post on user's wall Function 2
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "deprecation" })
 	private void postToWall(Context context,Facebook facebook) {
 	    Bundle parameters = new Bundle();
 	    parameters.putString("name", "Battery Monitor");
@@ -189,5 +189,33 @@ public class Utility {
 	        }
 	    });
 	}
+	
+	public static JSONObject getjsonFromInputStream(InputStream is) {
+		String result = "";
+		JSONObject jArray = null;
+
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					is, "iso-8859-1"), 8);
+			StringBuilder sb = new StringBuilder();
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line + "\n");
+			}
+			is.close();
+			result = sb.toString();
+		} catch (Exception e) {
+			Log.e("log_tag", "Error converting result " + e.toString());
+		}
+		try {
+			jArray = new JSONObject(result);
+		} catch (JSONException e) {
+			Log.e("log_tag", "Error parsing data " + e.toString());
+		}
+
+		return jArray;
+
+	}
+
 
 }

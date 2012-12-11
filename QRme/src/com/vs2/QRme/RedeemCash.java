@@ -1,12 +1,11 @@
 package com.vs2.QRme;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.facebook.android.Facebook;
-
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -26,10 +25,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.android.Facebook;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
-
 
 public class RedeemCash extends Activity {
 
@@ -43,20 +43,24 @@ public class RedeemCash extends Activity {
 	SharedPreferences sp;
 	AdView adView;
 	Facebook fb;
+	LinearLayout layoutCircle, layoutOperator;
+	Spinner spinnerCircle, spinnerOperator;
+	String operatorId;
+	String circleId; 
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.slide_up, R.anim.hold_y);
 		setContentView(R.layout.redeemcash);
 		startAdmobAd();
-		
-		
+
 		globalInitailize();
 		loadSource();
-		
-		
-		//Utility.postMessageOnWall("Good afternoon friends!");
+
+		// Utility.postMessageOnWall("Good afternoon friends!");
 	}
+
 	public void startAdmobAd() {
 		adView = new AdView(this, AdSize.BANNER, "a150990da66be0d");
 
@@ -79,43 +83,59 @@ public class RedeemCash extends Activity {
 		textSource = (EditText) findViewById(R.id.txt_payment_type);
 		textPoints = (TextView) findViewById(R.id.txt_points);
 		textAmount = (EditText) findViewById(R.id.txt_amount);
-		btnSendRequest = (Button)findViewById(R.id.btn_send_request);
-		LoadPoints loadPoints = new LoadPoints();
-		loadPoints.execute();
+		btnSendRequest = (Button) findViewById(R.id.btn_send_request);
+		layoutCircle = (LinearLayout) findViewById(R.id.layout_circle);
+		layoutOperator = (LinearLayout) findViewById(R.id.layout_operator);
+		spinnerCircle = (Spinner) findViewById(R.id.spinner_circle);
+		spinnerOperator = (Spinner) findViewById(R.id.spinner_operator);
+		new LoadPoints().execute();
+		new LoadOperator().execute();
+		new LoadCircle().execute();
 	}
 
-	public void gotoMain(View v) {
+		public void gotoMain(View v) {
 
 		finish();
 	}
 
 	public void sendRequest(View v) {
-		
+
 		try {
-			
-			if(amount < 50)
-			{
-				Toast.makeText(getApplicationContext(),getString(R.string.inSufBalMsg), Toast.LENGTH_LONG).show();
-			}
-			else{
-			
-				Double amt = Double.parseDouble(textAmount.getText().toString());
-				if(amt <= amount)
-				{
+
+			if (amount < 50) {
+				Toast.makeText(getApplicationContext(),
+						getString(R.string.inSufBalMsg), Toast.LENGTH_LONG)
+						.show();
+			} else {
+
+				Double amt = Double
+						.parseDouble(textAmount.getText().toString());
+				if (amt <= amount) {
 					String source = textSource.getText().toString();
-					SendCashRequest request = new SendCashRequest();
-					request.execute(amt.toString(),source,sourceType,Utility.s_gcmId);
+					if(source == "Mobile"){
+						SendCashRequest request = new SendCashRequest();
+						request.execute(amt.toString(), source, sourceType,
+								Utility.s_gcmId,operatorId,circleId);
+					}
+					else{
+						SendCashRequest request = new SendCashRequest();
+						request.execute(amt.toString(), source, sourceType,
+								Utility.s_gcmId,null,null);
+					}
 					
+
+				} else {
+					Toast.makeText(getApplicationContext(),
+							getString(R.string.inSufBalMsg), Toast.LENGTH_LONG)
+							.show();
 				}
-				else{
-					Toast.makeText(getApplicationContext(),getString(R.string.inSufBalMsg), Toast.LENGTH_LONG).show();
-				}
-				
+
 			}
 		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(),getString(R.string.errInReqMsg), Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(),
+					getString(R.string.errInReqMsg), Toast.LENGTH_LONG).show();
 		}
-			
+
 	}
 
 	@SuppressWarnings("unused")
@@ -127,7 +147,7 @@ public class RedeemCash extends Activity {
 		builder.setMessage(getString(R.string.noInternetMsg));
 		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				
+
 			}
 		});
 		AlertDialog dialog = builder.create();
@@ -136,12 +156,17 @@ public class RedeemCash extends Activity {
 
 	public void loadSelectedSource(int type) {
 		if (type == 1) {
+			layoutCircle.setVisibility(View.VISIBLE);
+			layoutOperator.setVisibility(View.VISIBLE);
 			textSource.setHint("Mobile No");
 			textSource.setInputType(InputType.TYPE_CLASS_PHONE);
 			sourceType = "Mobile";
 		} else {
+			layoutCircle.setVisibility(View.GONE);
+			layoutOperator.setVisibility(View.GONE);
 			textSource.setHint("Email ");
-			textSource.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+			textSource
+					.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 			sourceType = "Paypal";
 		}
 	}
@@ -188,34 +213,136 @@ public class RedeemCash extends Activity {
 		@Override
 		protected String doInBackground(String... urls) {
 			// TODO Auto-generated method stub
-			
-			DatabaseFunctions.sendCashRequest(urls[0], urls[1], urls[2],urls[3]);
-			
+
+			DatabaseFunctions.sendCashRequest(urls[0], urls[1], urls[2],
+					urls[3],urls[4],urls[5]);
+
 			return null;
 		}
 
+		@SuppressWarnings("deprecation")
 		@Override
 		protected void onPostExecute(String result) {
 
 			super.onPostExecute(result);
-			Toast.makeText(getApplicationContext(), getString(R.string.reqSentMsg), Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(),
+					getString(R.string.reqSentMsg), Toast.LENGTH_LONG).show();
 			Utility.isPointsChanged = true;
 			btnSendRequest.setText(getString(R.string.send_request));
-			if(Utility.allowPostOnWall)
-			{
-				Toast.makeText(getApplicationContext(), "comming in allow", Toast.LENGTH_LONG).show();
+			if (Utility.allowPostOnWall) {
+				Toast.makeText(getApplicationContext(), "comming in allow",
+						Toast.LENGTH_LONG).show();
 				fb = new Facebook(getString(R.string.app_id));
 				sp = getPreferences(MODE_PRIVATE);
-			
+
 				fb.setAccessToken(sp.getString("access_token", null));
 				fb.setAccessExpires(sp.getLong("expires", 0));
-				Utility.postMessageOnWall(fb,"I have just earned by using QRme Android app. Its awesome!");
+				Utility.postMessageOnWall(fb,
+						"I have just earned by using QRme Android app. Its awesome!");
 			}
 
 		}
 
 	}
-	
+
+	public class LoadOperator extends
+			AsyncTask<String, Integer, ArrayList<HashMap<String, String>>> {
+
+		@Override
+		protected ArrayList<HashMap<String, String>> doInBackground(
+				String... urls) {
+			// TODO Auto-generated method stub
+			return DatabaseFunctions.getOperators();
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<HashMap<String, String>> result) {
+
+			super.onPostExecute(result);
+
+			final SpinnerData items[] = new SpinnerData[result.size()];
+			for (int i = 0; i < items.length; i++) {
+
+				items[i] = new SpinnerData(result.get(i).get("Operator"),
+						result.get(i).get("id"));
+			}
+
+			ArrayAdapter<SpinnerData> adapter = new ArrayAdapter<SpinnerData>(
+					getApplicationContext(),
+					android.R.layout.simple_spinner_item, items);
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerOperator.setAdapter(adapter);
+			spinnerOperator
+					.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+						public void onItemSelected(AdapterView<?> parent,
+								View view, int position, long id) {
+							SpinnerData data = items[position];
+							operatorId = data.getValue();
+							Toast.makeText(
+									getApplicationContext(),
+									"Value : " + data.getValue() + "\n Text : "
+											+ data.getSpinnerText(),
+									Toast.LENGTH_SHORT).show();
+						}
+
+						public void onNothingSelected(AdapterView<?> parent) {
+
+						}
+					});
+
+		}
+
+	}
+
+	public class LoadCircle extends
+			AsyncTask<String, Integer, ArrayList<HashMap<String, String>>> {
+
+		@Override
+		protected ArrayList<HashMap<String, String>> doInBackground(
+				String... urls) {
+			// TODO Auto-generated method stub
+			return DatabaseFunctions.getCircle();
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<HashMap<String, String>> result) {
+
+			super.onPostExecute(result);
+
+			final SpinnerData items[] = new SpinnerData[result.size()];
+			for (int i = 0; i < items.length; i++) {
+
+				items[i] = new SpinnerData(result.get(i).get("state"),
+						result.get(i).get("id"));
+			}
+
+			ArrayAdapter<SpinnerData> adapter = new ArrayAdapter<SpinnerData>(
+					getApplicationContext(),
+					android.R.layout.simple_spinner_item, items);
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerCircle.setAdapter(adapter);
+			spinnerCircle
+					.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+						public void onItemSelected(AdapterView<?> parent,
+								View view, int position, long id) {
+							SpinnerData data = items[position];
+							circleId = data.getValue();
+							Toast.makeText(
+									getApplicationContext(),
+									"Value : " + data.getValue() + "\n Text : "
+											+ data.getSpinnerText(),
+									Toast.LENGTH_SHORT).show();
+						}
+
+						public void onNothingSelected(AdapterView<?> parent) {
+
+						}
+					});
+
+		}
+
+	}
+
 	public class LoadPoints extends AsyncTask<String, Integer, String> {
 
 		JSONObject jsonObject;
@@ -230,9 +357,8 @@ public class RedeemCash extends Activity {
 		@Override
 		protected String doInBackground(String... urls) {
 			// TODO Auto-generated method stub
-			jsonObject = Utility
-					.getJSONfromURL(Utility.getServerPath()+"/calculatepoints.php?id="
-							+ Utility.facebookId);
+			jsonObject = Utility.getJSONfromURL(Utility.getServerPath()
+					+ "/calculatepoints.php?id=" + Utility.facebookId);
 
 			return null;
 		}
@@ -254,22 +380,45 @@ public class RedeemCash extends Activity {
 		}
 
 	}
+
 	@SuppressWarnings({ "deprecation" })
 	public void postMessageOnWall(String msg) {
 		if (fb.isSessionValid()) {
-		    Bundle parameters = new Bundle();
-		    parameters.putString("message", msg);
-		    try {
-				
-				String response = fb.request("me/feed", parameters,"POST");
-				//System.out.println(response);
+			Bundle parameters = new Bundle();
+			parameters.putString("message", msg);
+			try {
+
+				String response = fb.request("me/feed", parameters, "POST");
+				// System.out.println(response);
 				Log.d("POST RESPONSE", "RESPONSE : " + response.toString());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
-			//login();
+			// login();
 			Log.d("POST LOGIN ERROR", "FACEBOOK USER NOT LOGGED IN");
 		}
+	}
+
+	class SpinnerData {
+		public SpinnerData(String spinnerText, String value) {
+			this.spinnerText = spinnerText;
+			this.value = value;
+		}
+
+		public String getSpinnerText() {
+			return spinnerText;
+		}
+
+		public String getValue() {
+			return value;
+		}
+
+		public String toString() {
+			return spinnerText;
+		}
+
+		String spinnerText;
+		String value;
 	}
 }

@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,11 +20,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.facebook.FacebookActivity;
-import com.facebook.SessionState;
 import com.facebook.Request;
 import com.facebook.Response;
-import com.google.android.gcm.GCMRegistrar;
+import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
+import com.google.android.gcm.GCMRegistrar;
 
 
 

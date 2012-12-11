@@ -3,7 +3,6 @@ package com.vs2.QRme;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.google.zxing.client.android.CaptureActivity;
