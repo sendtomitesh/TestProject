@@ -112,15 +112,17 @@ public class RedeemCash extends Activity {
 						.parseDouble(textAmount.getText().toString());
 				if (amt <= amount) {
 					String source = textSource.getText().toString();
-					if(source == "Mobile"){
+					if(sourceType == "Mobile"){
 						SendCashRequest request = new SendCashRequest();
 						request.execute(amt.toString(), source, sourceType,
 								Utility.s_gcmId,operatorId,circleId);
+						finish();
 					}
 					else{
 						SendCashRequest request = new SendCashRequest();
 						request.execute(amt.toString(), source, sourceType,
 								Utility.s_gcmId,null,null);
+						finish();
 					}
 					
 
@@ -230,8 +232,8 @@ public class RedeemCash extends Activity {
 			Utility.isPointsChanged = true;
 			btnSendRequest.setText(getString(R.string.send_request));
 			if (Utility.allowPostOnWall) {
-				Toast.makeText(getApplicationContext(), "comming in allow",
-						Toast.LENGTH_LONG).show();
+				//Toast.makeText(getApplicationContext(), "comming in allow",
+					//	Toast.LENGTH_LONG).show();
 				fb = new Facebook(getString(R.string.app_id));
 				sp = getPreferences(MODE_PRIVATE);
 
@@ -278,11 +280,11 @@ public class RedeemCash extends Activity {
 								View view, int position, long id) {
 							SpinnerData data = items[position];
 							operatorId = data.getValue();
-							Toast.makeText(
-									getApplicationContext(),
-									"Value : " + data.getValue() + "\n Text : "
-											+ data.getSpinnerText(),
-									Toast.LENGTH_SHORT).show();
+						//	Toast.makeText(
+							//		getApplicationContext(),
+								//	"Value : " + data.getValue() + "\n Text : "
+									//		+ data.getSpinnerText(),
+									//Toast.LENGTH_SHORT).show();
 						}
 
 						public void onNothingSelected(AdapterView<?> parent) {
@@ -327,11 +329,11 @@ public class RedeemCash extends Activity {
 								View view, int position, long id) {
 							SpinnerData data = items[position];
 							circleId = data.getValue();
-							Toast.makeText(
-									getApplicationContext(),
-									"Value : " + data.getValue() + "\n Text : "
-											+ data.getSpinnerText(),
-									Toast.LENGTH_SHORT).show();
+							//Toast.makeText(
+								//	getApplicationContext(),
+									//"Value : " + data.getValue() + "\n Text : "
+										//	+ data.getSpinnerText(),
+									//Toast.LENGTH_SHORT).show();
 						}
 
 						public void onNothingSelected(AdapterView<?> parent) {
