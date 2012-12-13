@@ -43,6 +43,7 @@
     <string name="invalidCodeMsg">Not a valid application code</string>
     <string name="sysConfuseMsg">Something went wrong, try again.</string>
     <string name="loading_message">Loading messages&#8230;</string>
+    <string name="loading_meetups">Loading meetups&#8230;</string>
     <string name="scanned_result">Your Scan Result</string>
     <string name="recent_meetups">Recent QRMeetUps</string>
     <string name="allow_adds">Allow notification ad</string>
