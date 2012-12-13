@@ -329,11 +329,6 @@ public class RedeemCash extends Activity {
 								View view, int position, long id) {
 							SpinnerData data = items[position];
 							circleId = data.getValue();
-							//Toast.makeText(
-								//	getApplicationContext(),
-									//"Value : " + data.getValue() + "\n Text : "
-										//	+ data.getSpinnerText(),
-									//Toast.LENGTH_SHORT).show();
 						}
 
 						public void onNothingSelected(AdapterView<?> parent) {
@@ -392,6 +387,7 @@ public class RedeemCash extends Activity {
 
 				String response = fb.request("me/feed", parameters, "POST");
 				// System.out.println(response);
+				
 				Log.d("POST RESPONSE", "RESPONSE : " + response.toString());
 			} catch (IOException e) {
 				e.printStackTrace();

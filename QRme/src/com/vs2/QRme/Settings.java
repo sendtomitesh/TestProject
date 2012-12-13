@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
 public class Settings extends Activity {
 
@@ -52,20 +51,20 @@ public class Settings extends Activity {
 	public void postOnWall(View v) {
 		if (checkAllowPost.isChecked()) {
 			Utility.allowPostOnWall = true;
-			Toast.makeText(getApplicationContext(), "Wall Post :  TRUE", Toast.LENGTH_LONG).show();
+			//Toast.makeText(getApplicationContext(), "Wall Post :  TRUE", Toast.LENGTH_LONG).show();
 		} else {
 			Utility.allowPostOnWall = false;
-			Toast.makeText(getApplicationContext(), "Wall Post :  FALSE", Toast.LENGTH_LONG).show();
+			//Toast.makeText(getApplicationContext(), "Wall Post :  FALSE", Toast.LENGTH_LONG).show();
 		}
 	}
 
 	public void showAdds(View v) {
 		if (checkAllowAdds.isChecked()) {
 			Utility.allowAdds = true;
-			Toast.makeText(getApplicationContext(), "ALLOW ADDS :  TRUE", Toast.LENGTH_LONG).show();
+			//Toast.makeText(getApplicationContext(), "ALLOW ADDS :  TRUE", Toast.LENGTH_LONG).show();
 		} else {
 			Utility.allowAdds = false;
-			Toast.makeText(getApplicationContext(), "ALLOW ADDS :  FALSE", Toast.LENGTH_LONG).show();
+			//Toast.makeText(getApplicationContext(), "ALLOW ADDS :  FALSE", Toast.LENGTH_LONG).show();
 		}
 	}
 
