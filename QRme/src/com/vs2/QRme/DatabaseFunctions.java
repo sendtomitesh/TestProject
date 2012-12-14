@@ -113,6 +113,14 @@ public class DatabaseFunctions {
 		}
 		return result;
 	}
+	
+	public static JSONObject getCurrentExchangeRate() throws JSONException {
+		// Create a new HttpClient and Post Header
+		JSONObject jsonObject;
+		jsonObject = Utility.getJSONfromURL(Utility.getServerPath()
+				+ "exchange.php");
+		return jsonObject;
+	}
 
 	public static int updateQrCode(String QrCode) {
 		// Create a new HttpClient and Post Header

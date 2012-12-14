@@ -35,7 +35,7 @@ public class RedeemCash extends Activity {
 
 	Spinner spinnerSource;
 	EditText textSource, textAmount;
-	TextView textPoints;
+	TextView textPoints,textMinimumCashout,textMinimumRecharge;
 	Button btnSendRequest;
 	String sourceType;
 	int points;
@@ -83,6 +83,8 @@ public class RedeemCash extends Activity {
 		textSource = (EditText) findViewById(R.id.txt_payment_type);
 		textPoints = (TextView) findViewById(R.id.txt_points);
 		textAmount = (EditText) findViewById(R.id.txt_amount);
+		textMinimumCashout = (TextView) findViewById(R.id.txt_minimum_cashout);
+		textMinimumRecharge = (TextView) findViewById(R.id.txt_minimum_recharge);
 		btnSendRequest = (Button) findViewById(R.id.btn_send_request);
 		layoutCircle = (LinearLayout) findViewById(R.id.layout_circle);
 		layoutOperator = (LinearLayout) findViewById(R.id.layout_operator);
@@ -91,6 +93,7 @@ public class RedeemCash extends Activity {
 		new LoadPoints().execute();
 		new LoadOperator().execute();
 		new LoadCircle().execute();
+		new LoadExchangeRate().execute();
 	}
 
 		public void gotoMain(View v) {
@@ -160,12 +163,16 @@ public class RedeemCash extends Activity {
 		if (type == 1) {
 			layoutCircle.setVisibility(View.VISIBLE);
 			layoutOperator.setVisibility(View.VISIBLE);
+			textMinimumRecharge.setVisibility(View.VISIBLE);
+			textMinimumCashout.setVisibility(View.GONE);
 			textSource.setHint("Mobile No");
 			textSource.setInputType(InputType.TYPE_CLASS_PHONE);
 			sourceType = "Mobile";
 		} else {
 			layoutCircle.setVisibility(View.GONE);
 			layoutOperator.setVisibility(View.GONE);
+			textMinimumRecharge.setVisibility(View.GONE);
+			textMinimumCashout.setVisibility(View.VISIBLE);
 			textSource.setHint("Email ");
 			textSource
 					.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
@@ -201,6 +208,8 @@ public class RedeemCash extends Activity {
 
 	}
 
+	
+	
 	public class SendCashRequest extends AsyncTask<String, Integer, String> {
 
 		JSONObject jsonObject;
@@ -246,6 +255,44 @@ public class RedeemCash extends Activity {
 		}
 
 	}
+	
+	public class LoadExchangeRate extends AsyncTask<String, Integer, JSONObject> {
+
+		
+
+		@Override
+		protected JSONObject doInBackground(String... urls) {
+			// TODO Auto-generated method stub
+			JSONObject jsonObject = null;
+			try {
+				jsonObject = DatabaseFunctions.getCurrentExchangeRate();
+				return jsonObject;
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return jsonObject;
+		}
+
+		@Override
+		protected void onPostExecute(JSONObject result) {
+
+			super.onPostExecute(result);
+			try {
+				if(result != null){
+					textMinimumRecharge.setText("Min. Recharge = " + result.getString("rechargeamt").toString() + " INR");
+					textMinimumCashout.setText("Min. Cashout = " + result.getString("cashamt").toString() + " USD");
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+		}
+
+	}
+
+
 
 	public class LoadOperator extends
 			AsyncTask<String, Integer, ArrayList<HashMap<String, String>>> {
