@@ -76,7 +76,7 @@ public class ScannedUser extends FacebookActivity {
 			textScannedUsername.setText(codeScanned);
 			textPointsEarned.setText(pointsEarned);
 			textTotalPoints.setText(totalPoints);
-			publishStory("I scanned a QRcode using QRme and earned "+otherScanInfo[3]+"Points!");
+			publishStory("I scanned a QR code using QRme and earned "+otherScanInfo[3]+" Points!");
 		}
 		if(scannedUserIntent.hasExtra("ScanError"))
 		{
@@ -129,10 +129,10 @@ public class ScannedUser extends FacebookActivity {
 
 	        Bundle postParams = new Bundle();
 	        postParams.putString("name", title);
-	        postParams.putString("caption", "QRme is a Great app earn Mobile recharge with fun.");
+	        postParams.putString("caption", "QRme is a Great app to earn Mobile recharge with fun.");
 	        postParams.putString("description", "QR codes/barcodes are available on various products. Using android phone with camera and QRme app you can scan codes. Upon scanning codes you will be rewarded with points. Points can be redeemed in terms of mobile recharge and cash");
 	        postParams.putString("link", "http://www.facebook.com/QRmeCommunity");
-	        postParams.putString("picture", "http://108.161.130.243/~vs2/qrme/qrme512.png");
+	        postParams.putString("picture", "http://qrme.vs2.in/qrmeLogo.png");
 
 	        Request.Callback callback= new Request.Callback() {
 	            @SuppressWarnings("unused")

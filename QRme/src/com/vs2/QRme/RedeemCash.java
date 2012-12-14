@@ -304,10 +304,11 @@ public class RedeemCash extends Activity {
 			return DatabaseFunctions.getOperators();
 		}
 
+		
 		@Override
 		protected void onPostExecute(ArrayList<HashMap<String, String>> result) {
 
-			super.onPostExecute(result);
+			
 
 			final SpinnerData items[] = new SpinnerData[result.size()];
 			for (int i = 0; i < items.length; i++) {
@@ -318,8 +319,8 @@ public class RedeemCash extends Activity {
 
 			ArrayAdapter<SpinnerData> adapter = new ArrayAdapter<SpinnerData>(
 					getApplicationContext(),
-					android.R.layout.simple_spinner_item, items);
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+					R.layout.spinneritem, items);
+			adapter.setDropDownViewResource(R.layout.spinneritem);
 			spinnerOperator.setAdapter(adapter);
 			spinnerOperator
 					.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -339,8 +340,10 @@ public class RedeemCash extends Activity {
 						}
 					});
 
-		}
-
+			super.onPostExecute(result);
+		} 
+		
+ 
 	}
 
 	public class LoadCircle extends
@@ -367,8 +370,8 @@ public class RedeemCash extends Activity {
 
 			ArrayAdapter<SpinnerData> adapter = new ArrayAdapter<SpinnerData>(
 					getApplicationContext(),
-					android.R.layout.simple_spinner_item, items);
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+					R.layout.spinneritem, items);
+			adapter.setDropDownViewResource(R.layout.spinneritem);
 			spinnerCircle.setAdapter(adapter);
 			spinnerCircle
 					.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

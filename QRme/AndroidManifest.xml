@@ -83,6 +83,7 @@
             android:name="com.vs2.QRme.Howtouse"
             android:label="@string/howtouse"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
              />
         <activity
             android:name="com.vs2.QRme.RedeemCash"
