@@ -88,12 +88,16 @@ public class RedeemCash extends Activity {
 		btnSendRequest = (Button) findViewById(R.id.btn_send_request);
 		layoutCircle = (LinearLayout) findViewById(R.id.layout_circle);
 		layoutOperator = (LinearLayout) findViewById(R.id.layout_operator);
+		spinnerSource = (Spinner) findViewById(R.id.spinner_source);
 		spinnerCircle = (Spinner) findViewById(R.id.spinner_circle);
 		spinnerOperator = (Spinner) findViewById(R.id.spinner_operator);
+		spinnerSource.setFocusableInTouchMode(true);
+		spinnerSource.requestFocus();
 		new LoadPoints().execute();
 		new LoadOperator().execute();
 		new LoadCircle().execute();
 		new LoadExchangeRate().execute();
+		
 	}
 
 		public void gotoMain(View v) {
@@ -181,8 +185,7 @@ public class RedeemCash extends Activity {
 	}
 
 	public void loadSource() {
-		spinnerSource = (Spinner) findViewById(R.id.spinner_source);
-
+		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
 				this, R.array.source_array,
 				android.R.layout.simple_spinner_item);
