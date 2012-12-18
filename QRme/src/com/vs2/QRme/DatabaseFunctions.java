@@ -99,6 +99,8 @@ public class DatabaseFunctions {
 		}
 
 	}
+	
+	
 
 	public static String getExchangeRate() {
 		// Create a new HttpClient and Post Header
@@ -294,6 +296,55 @@ public class DatabaseFunctions {
 		}
 
 		return mylist;
+	}
+	
+	
+	public static int delteMessage(String messageId) {
+		// Create a new HttpClient and Post Header
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(Utility.getServerPath()
+				+ "messagedelete.php");
+		int result = 0;
+		try {
+			// Add your data
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+			nameValuePairs
+			.add(new BasicNameValuePair("user_id", Utility.facebookId));
+			nameValuePairs.add(new BasicNameValuePair("id", messageId));
+			
+			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+			// Execute HTTP Post Request
+			HttpResponse response = httpclient.execute(httppost);
+			String responseBody = EntityUtils.toString(response.getEntity());
+			
+			JSONObject json = null;
+
+
+			try {
+				json = Util.parseJson(responseBody);
+
+				 result = Integer.parseInt(json.getString("Result"));
+				
+			} catch (FacebookError e) {
+				Log.e("Facebook error", e.toString());
+				return 1;
+			} catch (JSONException e) {
+				Log.e("JSONException", e.toString());
+				return 1;
+			}
+
+			Log.d("CASH REQUEST RESPONSE", responseBody.toString());
+		} catch (ClientProtocolException e) {
+			Log.e("Client error", e.toString());
+			return 1;
+		} catch (IOException e) {
+			Log.e("IO Error", e.toString());
+			return 1;
+		}
+		
+		return result;
+
 	}
 
 
