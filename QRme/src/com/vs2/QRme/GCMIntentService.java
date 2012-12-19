@@ -43,7 +43,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 		
 		NotificationCompat.Builder mBuilder =
 		        new NotificationCompat.Builder(this)
-		        .setSmallIcon(R.drawable.push_icon)
+		        .setSmallIcon(R.drawable.ic_launcher)
 		        .setContentTitle("Message from QRme!")
 		        .setContentText(message);
 				
@@ -66,18 +66,7 @@ public class GCMIntentService extends GCMBaseIntentService {
  
 	   count++;
 	        
-	   //     Intent notificationIntent = new Intent(context, Messages.class);
-	   //     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-	   //            Intent.FLAG_ACTIVITY_SINGLE_TOP);
-	   //     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-	      
-	  //      note.setLatestEventInfo(context, "App Notification", message, pendingIntent);
-	  //      note.number = count++;
-	  //      note.defaults |= Notification.DEFAULT_SOUND;
-//		note.defaults |= Notification.DEFAULT_VIBRATE;
-	//	note.defaults |= Notification.DEFAULT_LIGHTS;
-	//	note.flags |= Notification.FLAG_AUTO_CANCEL;
-	 //       notificationManager.notify(0, note);
+	   
     }
 
     @Override

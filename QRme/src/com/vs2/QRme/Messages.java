@@ -47,7 +47,8 @@ public class Messages extends Activity {
 
 		LoadMessages messages = new LoadMessages();
 		messages.execute(msgUrl);
-
+		 startAdmobAd();
+		 startAirpushAd();
 		// loadMessageFromUrl(url);
 	}
 
@@ -137,8 +138,8 @@ public class Messages extends Activity {
 				msg.setText("No messages in your inbox");
 			}
 
-			// startAdmobAd();
-			// startAirpushAd();
+			 startAdmobAd();
+			 startAirpushAd();
 
 		}
 
@@ -158,7 +159,7 @@ public class Messages extends Activity {
 
 			super.onPostExecute(result);
 			if(result == 0){
-				Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_LONG).show();
+			//	Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_LONG).show();
 				new LoadMessages().execute(msgUrl);
 			}
 			else{
