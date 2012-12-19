@@ -41,7 +41,9 @@ public class Utility {
 
 	public static String getServerPath()
 	{
-		return "http://108.161.130.243/~vs2/qrme/";
+		//return "http://108.161.130.243/~vs2/qrme/";
+		return "http://108.161.130.243/~vs2/test/";
+		//return "http://test.qrme.vs2.in/";
 	}
 	public static String generateQrCode() {
 		return new BigInteger(130, random).toString(32);
@@ -88,7 +90,7 @@ public class Utility {
 			
 
 		} catch (Exception e) {
-			Log.e("log_tag", "Error in http connection " + e.toString());
+			//Log.e("log_tag", "Error in http connection " + e.toString());
 		}
 
 		// convert response to string
@@ -103,14 +105,14 @@ public class Utility {
 			is.close();
 			result = sb.toString();
 		} catch (Exception e) {
-			Log.e("log_tag", "Error converting result " + e.toString());
+			//Log.e("log_tag", "Error converting result " + e.toString());
 		}
 
 		// try parse the string to a JSON object
 		try {
 			jArray = new JSONObject(result);
 		} catch (JSONException e) {
-			Log.e("log_tag", "Error parsing data " + e.toString());
+			//Log.e("log_tag", "Error parsing data " + e.toString());
 		}
 
 		return jArray;
@@ -125,7 +127,7 @@ public class Utility {
 			query = URLEncoder.encode(str, "utf-8");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return query;
 	}
@@ -133,7 +135,7 @@ public class Utility {
 	
 	//I used First one
 	//Post on user's wall Function 1
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unused" })
 	public static void postMessageOnWall(Facebook facebook,String msg) {
 		if (facebook.isSessionValid()) {
 		    Bundle parameters = new Bundle();
@@ -144,7 +146,7 @@ public class Utility {
 				
 				String response = facebook.request("me/feed", parameters,"POST");
 				//System.out.println(response);
-				Log.d("POST RESPONSE", "RESPONSE : " + response.toString());
+				//Log.d("POST RESPONSE", "RESPONSE : " + response.toString());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -205,12 +207,12 @@ public class Utility {
 			is.close();
 			result = sb.toString();
 		} catch (Exception e) {
-			Log.e("log_tag", "Error converting result " + e.toString());
+			//Log.e("log_tag", "Error converting result " + e.toString());
 		}
 		try {
 			jArray = new JSONObject(result);
 		} catch (JSONException e) {
-			Log.e("log_tag", "Error parsing data " + e.toString());
+			//Log.e("log_tag", "Error parsing data " + e.toString());
 		}
 
 		return jArray;

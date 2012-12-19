@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -97,7 +96,7 @@ public class MeetupList extends Activity {
 
 				}
 			} catch (JSONException e) {
-				Log.e("log_tag", "Error parsing data " + e.toString());
+				//Log.e("log_tag", "Error parsing data " + e.toString());
 
 			}
 

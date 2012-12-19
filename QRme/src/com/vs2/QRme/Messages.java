@@ -13,13 +13,10 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +30,8 @@ public class Messages extends Activity {
 	ListView listview;
 	AdView adView;
 	Airpush airpush;
-	ListAdapter adapter;
+	MessageListAdapter adapter;
+	boolean isAllDeleted = false;
 	String msgUrl = Utility.getServerPath() + "messagelist.php?id="
 			+ Utility.facebookId;
 
@@ -115,7 +113,7 @@ public class Messages extends Activity {
 				}
 			} catch (JSONException e) {
 
-				Log.e("log_tag", "Error parsing data " + e.toString());
+				//Log.e("log_tag", "Error parsing data " + e.toString());
 				return null;
 
 			}
@@ -128,17 +126,14 @@ public class Messages extends Activity {
 
 			super.onPostExecute(result);
 
-			// final ListView listview = (ListView)
-			// findViewById(R.id.listview_message);
-			if (result.size() > 0) {
-				setmsgList(result);
-			} else {
+			setmsgList(result);
+			if (result.size() < 0) {
 				TextView msg = (TextView) findViewById(R.id.loadingtxt);
 				msg.setText("No messages in your inbox");
 			}
-
-			// startAdmobAd();
-			// startAirpushAd();
+			
+			 startAdmobAd();
+			 startAirpushAd();
 
 		}
 
@@ -158,11 +153,11 @@ public class Messages extends Activity {
 
 			super.onPostExecute(result);
 			if(result == 0){
-				Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_LONG).show();
+				//Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_LONG).show();
 				new LoadMessages().execute(msgUrl);
 			}
 			else{
-				Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), "Error deleting", Toast.LENGTH_LONG).show();
 			}
 			
 		}
@@ -172,9 +167,11 @@ public class Messages extends Activity {
 	public void setmsgList(ArrayList<HashMap<String, String>> mylist) {
 		String[] from = new String[] { "message", "id" };
 		int[] to = new int[] { R.id.txt_message, R.id.txt_message_id };
-		adapter = new SimpleAdapter(getApplicationContext(), mylist,
+	
+		adapter = new MessageListAdapter(getApplicationContext(), mylist,
 				R.layout.messages_list_item, from, to);
 		listview.setAdapter(adapter);
+		
 		layoutLoading.setVisibility(View.GONE);
 		listview.setVisibility(View.VISIBLE);
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -183,6 +180,7 @@ public class Messages extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
+				
 				final TextView textId = (TextView) view
 						.findViewById(R.id.txt_message_id);
 
@@ -198,8 +196,7 @@ public class Messages extends Activity {
 								// TODO Auto-generated method stub
 								new DeleteMessage().execute(textId.getText()
 										.toString());
-								
-
+			
 							}
 						}).setNegativeButton("Cancel", new OnClickListener() {
 
