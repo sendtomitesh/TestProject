@@ -18,8 +18,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.facebook.android.FacebookError;
 import com.facebook.android.Util;
 
@@ -49,14 +47,15 @@ public class DatabaseFunctions {
 
 			// Execute HTTP Post Request
 			HttpResponse response = httpclient.execute(httppost);
+			@SuppressWarnings("unused")
 			String responseBody = EntityUtils.toString(response.getEntity());
-			Log.e("INSERT RESPONSE", responseBody.toString());
+			//Log.e("INSERT RESPONSE", responseBody.toString());
 			return 0;
 		} catch (ClientProtocolException e) {
-			Log.e("Client error", e.toString());
+			//Log.e("Client error", e.toString());
 
 		} catch (IOException e) {
-			Log.e("IO Error", e.toString());
+			//Log.e("IO Error", e.toString());
 
 		}
 		return 1;
@@ -66,7 +65,7 @@ public class DatabaseFunctions {
 	public static void sendCashRequest(String amount, String source,
 			String type, String gcm_id,String operator,String circle) {
 		// Create a new HttpClient and Post Header
-		Log.d("CASH REQUEST", "Sending request");
+		//Log.d("CASH REQUEST", "Sending request");
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(Utility.getServerPath()
 				+ "cashrequest.php");
@@ -90,12 +89,13 @@ public class DatabaseFunctions {
 
 			// Execute HTTP Post Request
 			HttpResponse response = httpclient.execute(httppost);
+			@SuppressWarnings("unused")
 			String responseBody = EntityUtils.toString(response.getEntity());
-			Log.d("CASH REQUEST RESPONSE", responseBody.toString());
+			//Log.d("CASH REQUEST RESPONSE", responseBody.toString());
 		} catch (ClientProtocolException e) {
-			Log.e("Client error", e.toString());
+			//Log.e("Client error", e.toString());
 		} catch (IOException e) {
-			Log.e("IO Error", e.toString());
+			//Log.e("IO Error", e.toString());
 		}
 
 	}
@@ -111,7 +111,7 @@ public class DatabaseFunctions {
 			result = jsonObject.getString("result").toString();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return result;
 	}
@@ -149,15 +149,15 @@ public class DatabaseFunctions {
 				check = json.getInt("Result");
 
 			} catch (FacebookError e) {
-				Log.e("Facebook error", e.toString());
+				//Log.e("Facebook error", e.toString());
 			} catch (JSONException e) {
-				Log.e("JSONException", e.toString());
+				//Log.e("JSONException", e.toString());
 			}
 
 		} catch (ClientProtocolException e) {
-			Log.e("Client error", e.toString());
+			//Log.e("Client error", e.toString());
 		} catch (IOException e) {
-			Log.e("IO Error", e.toString());
+			//Log.e("IO Error", e.toString());
 		}
 		return check;
 
@@ -195,15 +195,15 @@ public class DatabaseFunctions {
 				// Log.d("RESPONSE","FACEBOOK USERNAME : " + check[2] );
 
 			} catch (FacebookError e) {
-				Log.e("Facebook error", e.toString());
+				//Log.e("Facebook error", e.toString());
 			} catch (JSONException e) {
-				Log.e("JSONException", e.toString());
+				//Log.e("JSONException", e.toString());
 			}
 
 		} catch (ClientProtocolException e) {
-			Log.e("Client error", e.toString());
+			//Log.e("Client error", e.toString());
 		} catch (IOException e) {
-			Log.e("IO Error", e.toString());
+			//Log.e("IO Error", e.toString());
 		}
 
 		return check;
@@ -240,15 +240,15 @@ public class DatabaseFunctions {
 			// else return 1;
 		} catch (ClientProtocolException e) {
 
-			Log.e("Client error", e.toString());
+			//Log.e("Client error", e.toString());
 			// return 2;
 		} catch (IOException e) {
 
-			Log.e("IO Error", e.toString());
+			//Log.e("IO Error", e.toString());
 			// return 3;
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		return mylist;
@@ -284,15 +284,15 @@ public class DatabaseFunctions {
 			// else return 1;
 		} catch (ClientProtocolException e) {
 
-			Log.e("Client error", e.toString());
+			//Log.e("Client error", e.toString());
 			// return 2;
 		} catch (IOException e) {
 
-			Log.e("IO Error", e.toString());
+			//Log.e("IO Error", e.toString());
 			// return 3;
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		return mylist;
@@ -327,19 +327,19 @@ public class DatabaseFunctions {
 				 result = Integer.parseInt(json.getString("Result"));
 				
 			} catch (FacebookError e) {
-				Log.e("Facebook error", e.toString());
+				//Log.e("Facebook error", e.toString());
 				return 1;
 			} catch (JSONException e) {
-				Log.e("JSONException", e.toString());
+				//Log.e("JSONException", e.toString());
 				return 1;
 			}
 
-			Log.d("CASH REQUEST RESPONSE", responseBody.toString());
+			//Log.d("CASH REQUEST RESPONSE", responseBody.toString());
 		} catch (ClientProtocolException e) {
-			Log.e("Client error", e.toString());
+			//Log.e("Client error", e.toString());
 			return 1;
 		} catch (IOException e) {
-			Log.e("IO Error", e.toString());
+			//Log.e("IO Error", e.toString());
 			return 1;
 		}
 		

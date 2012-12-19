@@ -131,7 +131,7 @@ public class ScannedUser extends FacebookActivity {
 	        postParams.putString("name", title);
 	        postParams.putString("caption", "QRme is a Great app to earn Mobile recharge with fun.");
 	        postParams.putString("description", "QR codes/barcodes are available on various products. Using android phone with camera and QRme app you can scan codes. Upon scanning codes you will be rewarded with points. Points can be redeemed in terms of mobile recharge and cash");
-	        postParams.putString("link", "http://www.facebook.com/QRmeCommunity");
+	        postParams.putString("link", "https://play.google.com/store/apps/details?id=com.vs2.QRme");
 	        postParams.putString("picture", "http://qrme.vs2.in/qrmeLogo.png");
 
 	        Request.Callback callback= new Request.Callback() {

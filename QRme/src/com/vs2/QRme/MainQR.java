@@ -13,7 +13,6 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -242,7 +241,7 @@ public class MainQR extends FacebookActivity {
 
 			String url = Utility.getServerPath() + "userinfo.php?id="
 					+ Utility.facebookId;
-			Log.d("USERINFO", url);
+			//Log.d("USERINFO", url);
 
 			object = Utility.getJSONfromURL(url);
 
@@ -368,8 +367,8 @@ public class MainQR extends FacebookActivity {
 				}
 
 			} catch (Exception e) {
-				Log.e("Error", e.getMessage());
-				e.printStackTrace();
+				//Log.e("Error", e.getMessage());
+				//e.printStackTrace();
 			}
 			return mIcon11;
 		}

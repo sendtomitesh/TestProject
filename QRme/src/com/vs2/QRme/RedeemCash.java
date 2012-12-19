@@ -14,7 +14,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -197,7 +196,7 @@ public class RedeemCash extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView,
 					View selectedItemView, int position, long id) {
-				Log.d("Selected Item", "Position : " + position);
+				//Log.d("Selected Item", "Position : " + position);
 				int pos = position + 1;
 				loadSelectedSource(pos);
 			}
@@ -272,7 +271,7 @@ public class RedeemCash extends Activity {
 				return jsonObject;
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			return jsonObject;
 		}
@@ -288,7 +287,7 @@ public class RedeemCash extends Activity {
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
 		}
@@ -431,7 +430,7 @@ public class RedeemCash extends Activity {
 
 	}
 
-	@SuppressWarnings({ "deprecation" })
+	@SuppressWarnings({ "deprecation", "unused" })
 	public void postMessageOnWall(String msg) {
 		if (fb.isSessionValid()) {
 			Bundle parameters = new Bundle();
@@ -441,13 +440,13 @@ public class RedeemCash extends Activity {
 				String response = fb.request("me/feed", parameters, "POST");
 				// System.out.println(response);
 				
-				Log.d("POST RESPONSE", "RESPONSE : " + response.toString());
+				//Log.d("POST RESPONSE", "RESPONSE : " + response.toString());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
 			// login();
-			Log.d("POST LOGIN ERROR", "FACEBOOK USER NOT LOGGED IN");
+			//Log.d("POST LOGIN ERROR", "FACEBOOK USER NOT LOGGED IN");
 		}
 	}
 
