@@ -3,6 +3,7 @@ package com.vs2.QRme;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -24,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airpush.android.Airpush;
-import com.facebook.FacebookActivity;
 import com.facebook.widget.ProfilePictureView;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
@@ -34,7 +34,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 
-public class MainQR extends FacebookActivity {
+public class MainQR extends Activity {
 
 	ImageView qrCodeImage;
 	TextView welcomeText, pointsText;

@@ -26,28 +26,28 @@
         android:textColor="#ffffff"
         android:textSize="25sp"
         android:typeface="serif" />
-
-    <ImageView
-        android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/welcome"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:contentDescription="@string/app_name"
-        android:onClick="loginClick"
-        android:src="@drawable/login_button"
-        android:visibility="invisible" />
-
+	 <com.facebook.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_below="@+id/welcome"
+        	android:layout_centerHorizontal="true"
+        	android:visibility="invisible"
+        	 />
+    
     <LinearLayout
         android:id="@+id/auth_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_below="@+id/login"
+        android:layout_below="@+id/login_button"
         android:layout_marginTop="20dp"
         android:background="@android:color/transparent"
         android:gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:visibility="invisible" >
 
         <TextView
             android:id="@+id/txt_auth"

@@ -13,22 +13,27 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.facebook.FacebookActivity;
 import com.facebook.Request;
 import com.facebook.Response;
+import com.facebook.Session;
 import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
+
 import com.google.android.gcm.GCMRegistrar;
+import com.facebook.widget.*;
 
 
-
-public class MainActivity extends FacebookActivity  {
+public class MainActivity extends FragmentActivity {
 	String gcm_id="";
 	ImageView pic;
 	
@@ -38,6 +43,12 @@ public class MainActivity extends FacebookActivity  {
 	boolean terms=false;
 
 	private final Context appContexts = this;
+	
+	
+	private boolean isResumed = false;
+	LoginButton lb;
+	
+	
 //	String[] permissions121 = { "offline_access", "publish_stream", "user_photos",
 	//		"publish_checkins", "photo_upload" };
 	List<String> fbPerm = new ArrayList<String>();
@@ -50,7 +61,10 @@ public class MainActivity extends FacebookActivity  {
 		fbPerm.add("publish_stream");
 		fbPerm.add("photo_upload");
 		fbPerm.add("publish_actions");
-		
+		lb =(LoginButton)findViewById(R.id.login_button);
+		lb.setPublishPermissions(fbPerm);
+		uiHelper = new UiLifecycleHelper(this, callback);
+		uiHelper.onCreate(savedInstanceState);
 		if(getGCMfromSP()==null )
 	  		gcm_id=setGCM_Id();
 		else
@@ -66,30 +80,106 @@ public class MainActivity extends FacebookActivity  {
 			} 
 		else 
 			{
-			   
-			 	if(this.isSessionOpen())
-				{
-					if(getSessionState().isOpened())
-					{
-						login();
-					}
-				}
-				else
-				{
-					if(terms)
-						initiateLogin();
-					else
-						showTermsOfUse();
-					
-					//	this.openSessionForPublish(getString(R.string.app_id), fbPerm);
-					
-				
-				}
 			
+				initializeLogin();
 			}  
+	}
+	private void initializeLogin()
+	{
+		Session s = Session.getActiveSession();
+		if(s.isOpened())
+		{
+			makeMeRequest(s);
+		}
+		else
+		{
+			
+			showTermsOfUse();
+			
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		isResumed=true;
+		uiHelper.onResume();
+		super.onResume();
 	}
 
 	
+	
+	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+	    // Only make changes if the activity is visible
+		
+	    if (isResumed) 
+	    {
+	       
+	        if (state.isOpened()) {
+	            // If the session state is open:
+	            // Show the authenticated fragment
+	        	LinearLayout authLayout =(LinearLayout)findViewById(R.id.auth_layout);
+	        	lb.setVisibility(View.INVISIBLE);
+	        	authLayout.setVisibility(View.VISIBLE);
+	            makeMeRequest(session);
+	        } else if (state.isClosed()) {
+	            // If the session state is closed:
+	            // Show the login fragment
+	           // showFragment(SPLASH, false);
+	        	
+	        	lb.setVisibility(View.VISIBLE);
+	        }
+	    }
+	}
+	private void makeMeRequest(final Session session) {
+	    // Make an API call to get user data and define a 
+	    // new callback to handle the response.
+	    Request request = Request.newMeRequest(session, 
+	            new Request.GraphUserCallback() {
+	        @Override
+	        public void onCompleted(GraphUser user, Response response) {
+	            // If the response is successful
+	            if (session == Session.getActiveSession()) {
+	                if (user != null) {
+	                    // Set the id for the ProfilePictureView
+	                    // view that in turn displays the profile picture.
+	                	if(gcm_id=="")
+		        	  	{
+			        	  	if(getGCMfromSP()==null )
+			        	  		gcm_id=setGCM_Id();
+			      			else
+			      				gcm_id=getGCMfromSP();
+		        	  	}
+		        	  	storeGCMtoSP(gcm_id);
+		        	  	setValues(user);
+		        	  	new storeUserInDatabase().execute(user.getId(),user.getName(),gcm_id);
+	                	
+	                
+	                }
+	            }
+	            if (response.getError() != null) {
+	                // Handle errors, will do so later.
+	            }
+	        }
+
+			
+	    });
+	    request.executeAsync();
+	} 
+	
+		
+	private UiLifecycleHelper uiHelper;
+	private Session.StatusCallback callback = 
+	    new Session.StatusCallback() {
+	    @Override
+	    public void call(Session session, 
+	            SessionState state, Exception exception) {
+	        onSessionStateChange(session, state, exception);
+	    }
+	};
+
+
+
 
 	private void showTermsOfUse() {
 		// TODO Auto-generated method stub
@@ -110,7 +200,7 @@ public class MainActivity extends FacebookActivity  {
 		builder.setPositiveButton("I accept", new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
 		               // User clicked OK button
-		        	   initiateLogin();
+		        	   lb.setVisibility(View.VISIBLE); 
 		           }
 		       });
 		builder.setNegativeButton("I do not accept", new DialogInterface.OnClickListener() {
@@ -127,33 +217,11 @@ public class MainActivity extends FacebookActivity  {
 		dialog.show();
 	}
 
-    private void initiateLogin()
-    {
-    	this.openSessionForPublish(getString(R.string.app_id), fbPerm);
-    }
+    
 
-	private void login()
-	{
-		Request request = Request.newMeRequest(
-			      this.getSession(),
-			      new Request.GraphUserCallback() {
-			        // callback after Graph API response with user object
-			        @Override
-			        public void onCompleted(GraphUser user, Response response) {
-			          if (user != null) {
-			        	
-			        	  setValues(user);
-			        	  
-			        	  moveToQR();
-			        	
-			          }
-			        }
-			      }
-			    );
-			    Request.executeBatchAsync(request);
-	}
 	
-	@Override
+	
+/*	@Override
 	protected void onSessionStateChange(SessionState state, Exception exception) {
 	  // user has either logged in or not ...
 	  if (state.isOpened()) {
@@ -186,7 +254,7 @@ public class MainActivity extends FacebookActivity  {
 	  }
 	}		
 
-
+*/
 	private void setValues(GraphUser user)
 	{
 		Utility.facebookId=user.getId();
@@ -201,15 +269,31 @@ public class MainActivity extends FacebookActivity  {
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
+		isResumed=false;
+		uiHelper.onPause();
 		super.onPause();
 	}
-
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		 uiHelper.onDestroy();
+		super.onDestroy();
+	}
 	@Override
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		super.onStop();
 	}
-
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    super.onActivityResult(requestCode, resultCode, data);
+	    uiHelper.onActivityResult(requestCode, resultCode, data);
+	}
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+	    super.onSaveInstanceState(outState);
+	    uiHelper.onSaveInstanceState(outState);
+	}
 	private void storeGCMtoSP(String gcm)
 	{
 		SharedPreferences sp= getSharedPreferences("gcm",MODE_PRIVATE);

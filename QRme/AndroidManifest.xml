@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vs2.QRme"
-    android:versionCode="2"
-    android:versionName="1.1" >
+    android:versionCode="3"
+    android:versionName="1.2" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -169,11 +169,10 @@
 
         <service android:name="com.vs2.QRme.GCMIntentService" />
 
-        <activity android:name="com.facebook.LoginActivity" />
+        
 
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/app_id" />
+         <activity android:name="com.facebook.LoginActivity"></activity>
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
 
         <activity
             android:name="com.vs2.QRme.QRcode_Evaluation"

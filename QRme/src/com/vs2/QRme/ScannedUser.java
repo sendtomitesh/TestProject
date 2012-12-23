@@ -9,6 +9,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.FacebookActivity;
 import com.facebook.FacebookRequestError;
 import com.facebook.HttpMethod;
 import com.facebook.Request;
@@ -29,7 +29,7 @@ import com.google.ads.AdSize;
 import com.google.ads.AdView;
 
 
-public class ScannedUser extends FacebookActivity {
+public class ScannedUser extends Activity {
 	LinearLayout layoutLoading;
 	TextView textScannedUsername,textPointsEarned,textTotalPoints;
 	String[] scannedInfo;
@@ -111,6 +111,7 @@ public class ScannedUser extends FacebookActivity {
 	public void gotoMain(View v) {
 		finish();
 	}
+	
 	private void publishStory(String title) {
 	    Session session = Session.getActiveSession();
 
@@ -120,10 +121,9 @@ public class ScannedUser extends FacebookActivity {
 	        List<String> permissions = session.getPermissions();
 	        if (!isSubsetOf(PERMISSIONS, permissions)) {
 	            pendingPublishReauthorization = true;
-	            Session.ReauthorizeRequest reauthRequest = new Session
-	                    .ReauthorizeRequest(this, PERMISSIONS)
-	                    .setRequestCode(REAUTH_ACTIVITY_CODE);
-	        session.reauthorizeForPublish(reauthRequest);
+	            Session.NewPermissionsRequest newPermissionsRequest = new Session
+	                    .NewPermissionsRequest(this, PERMISSIONS);
+	        session.requestNewPublishPermissions(newPermissionsRequest);
 	            return;
 	        }
 
@@ -135,8 +135,7 @@ public class ScannedUser extends FacebookActivity {
 	        postParams.putString("picture", "http://qrme.vs2.in/qrmeLogo.png");
 
 	        Request.Callback callback= new Request.Callback() {
-	            @SuppressWarnings("unused")
-				public void onCompleted(Response response) {
+	            public void onCompleted(Response response) {
 	                JSONObject graphResponse = response
 	                                           .getGraphObject()
 	                                           .getInnerJSONObject();
@@ -147,14 +146,8 @@ public class ScannedUser extends FacebookActivity {
 	                    Log.i(TAG,
 	                        "JSON error "+ e.getMessage());
 	                }
-	                FacebookRequestError error = response.getError();
-	                if (error != null) {
-	                    Toast.makeText(getApplicationContext(),
-	                         error.getErrorMessage(),
-	                         Toast.LENGTH_SHORT).show();
-	                    } 
-	                }
-	            
+	                
+	            }
 	        };
 
 	        Request request = new Request(session, "me/feed", postParams, 
@@ -165,6 +158,7 @@ public class ScannedUser extends FacebookActivity {
 	    }
 
 	}
+
 	private boolean isSubsetOf(Collection<String> subset, Collection<String> superset) {
 	    for (String string : subset) {
 	        if (!superset.contains(string)) {
