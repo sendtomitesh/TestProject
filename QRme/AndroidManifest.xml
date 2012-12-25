@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vs2.QRme"
-    android:versionCode="3"
-    android:versionName="1.2" >
+    android:versionCode="5"
+    android:versionName="1.4" >
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="15" />
+        android:targetSdkVersion="17" />
 
     <permission
         android:name="com.vs2.QRme.permission.C2D_MESSAGE"

@@ -46,6 +46,7 @@ public class MainActivity extends FragmentActivity {
 	
 	
 	private boolean isResumed = false;
+	private boolean isProcessCompleted=false;
 	LoginButton lb;
 	
 	
@@ -89,7 +90,7 @@ public class MainActivity extends FragmentActivity {
 		Session s = Session.getActiveSession();
 		if(s.isOpened())
 		{
-			makeMeRequest(s);
+			makeMeRequest(s,true);
 		}
 		else
 		{
@@ -121,7 +122,7 @@ public class MainActivity extends FragmentActivity {
 	        	LinearLayout authLayout =(LinearLayout)findViewById(R.id.auth_layout);
 	        	lb.setVisibility(View.INVISIBLE);
 	        	authLayout.setVisibility(View.VISIBLE);
-	            makeMeRequest(session);
+	            makeMeRequest(session,false);
 	        } else if (state.isClosed()) {
 	            // If the session state is closed:
 	            // Show the login fragment
@@ -131,18 +132,20 @@ public class MainActivity extends FragmentActivity {
 	        }
 	    }
 	}
-	private void makeMeRequest(final Session session) {
+	private void makeMeRequest(final Session session, final boolean userExist) {
 	    // Make an API call to get user data and define a 
 	    // new callback to handle the response.
+		
 	    Request request = Request.newMeRequest(session, 
 	            new Request.GraphUserCallback() {
 	        @Override
 	        public void onCompleted(GraphUser user, Response response) {
 	            // If the response is successful
 	            if (session == Session.getActiveSession()) {
-	                if (user != null) {
+	                if (user != null && !isProcessCompleted) {
 	                    // Set the id for the ProfilePictureView
 	                    // view that in turn displays the profile picture.
+	                	isProcessCompleted=true;
 	                	if(gcm_id=="")
 		        	  	{
 			        	  	if(getGCMfromSP()==null )
@@ -152,7 +155,11 @@ public class MainActivity extends FragmentActivity {
 		        	  	}
 		        	  	storeGCMtoSP(gcm_id);
 		        	  	setValues(user);
-		        	  	new storeUserInDatabase().execute(user.getId(),user.getName(),gcm_id);
+		        	  	
+		        	  	if(!userExist)
+		        	  		new storeUserInDatabase().execute(user.getId(),user.getName(),gcm_id);
+		        	  	else
+		        	  		moveToQR();
 	                	
 	                
 	                }
@@ -221,40 +228,7 @@ public class MainActivity extends FragmentActivity {
 
 	
 	
-/*	@Override
-	protected void onSessionStateChange(SessionState state, Exception exception) {
-	  // user has either logged in or not ...
-	  if (state.isOpened()) {
-	    // make request to the /me API
-	    Request request = Request.newMeRequest(
-	      this.getSession(),
-	      new Request.GraphUserCallback() {
-	        // callback after Graph API response with user object
-	        @Override
-	        public void onCompleted(GraphUser user, Response response) {
-	          if (user != null) {
-	        	  if(gcm_id=="")
-	        	  	{
-		        	  	if(getGCMfromSP()==null )
-		        	  		gcm_id=setGCM_Id();
-		      			else
-		      				gcm_id=getGCMfromSP();
-	        	  	}
-	        	  	storeGCMtoSP(gcm_id);
-	        	  	setValues(user);
-	        	  	new storeUserInDatabase().execute(user.getId(),user.getName(),gcm_id);
-	        	  
-	           
-	        	  	
-	          }
-	        }
-	      }
-	    );
-	    Request.executeBatchAsync(request);
-	  }
-	}		
 
-*/
 	private void setValues(GraphUser user)
 	{
 		Utility.facebookId=user.getId();
